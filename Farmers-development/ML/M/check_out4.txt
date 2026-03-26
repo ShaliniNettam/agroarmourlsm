@@ -1,0 +1,9 @@
+
+=== pos 702 ===
+'vetDoctors: "Vet Doctors",\n    compliance: "Compliance",\n    findVet: "Find Vet",\n    premium: "Premium",\n    logout: "Logout",\n    welcome: "Welcome",\n    loading: "Loading...",\n    \n    // GPS Tracking\n    gpsTrackingTitle: "GPS Tracking",\n    gpsTrackingSubtitle: "Track your location and find vet'
+
+=== pos 42831 ===
+'vetDoctors: "पशु चिकित्सक",\n    compliance: "अनुपालन",\n    findVet: "पशु चिकित्सक खोजें",\n    premium: "प्रीमियम",\n    logout: "लॉगआउट",\n    welcome: "स्वागत है",\n    loading: "लोड हो रहा है...",\n    \n    // GPS Tracking\n    gpsTrackingTitle: "GPS ट्रैकिंग",\n    gpsTrackingSubtitle: "अपना स्थान ट्रै'
+
+=== pos 84282 ===
+'vetDoctors: "ವೆಟ್ ವೈದ್ಯರು",\n    compliance: "ಅನುಸರಣಾ",\n    findVet: "ವೆಟ್ ಹುಡುಕಿ",\n    premium: "ಪ್ರೀಮಿಯಂ",\n    logout: "ಲಾಗ್ ಔಟ್",\n    welcome: "ಸ್ವಾಗತ",\n    loading: "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",\n    \n    // GPS Tracking\n    gpsTrackingTitle: "GPS ಟ್ರ್ಯಾಕಿಂಗ್",\n    gpsTrackingSubtitle: "ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಟ್ರ'

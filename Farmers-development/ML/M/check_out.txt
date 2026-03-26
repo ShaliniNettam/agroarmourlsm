@@ -1,0 +1,17 @@
+en section: 495, hi section: 42630, kn section: 84068
+  ''en':' at -1
+  '"en":' at -1
+  'en :' at -1
+  'translations = {' at 476
+vetDoctors at 702: 'vetDoctors: "Vet Doctors",\n    compliance: "Compliance",\n   '
+vetDoctors at 42831: 'vetDoctors: "पशु चिकित्सक",\n    compliance: "अनुपालन",\n    f'
+vetDoctors at 84282: 'vetDoctors: "ವೆಟ್ ವೈದ್ಯರು",\n    compliance: "ಅನುಸರಣಾ",\n    f'
+vetClinicsComingSoon at 40418: 'vetClinicsComingSoon: "Vet clinics management coming soon...",\n    vetPatientsCo'
+vetClinicsComingSoon at 81856: 'vetClinicsComingSoon: "पशु क्लीनिक प्रबंधन जल्द आ रहा है...",\n    vetPatientsCom'
+vetClinicsComingSoon at 143772: 'vetClinicsComingSoon: "ಪಶು ಕ್ಲಿನಿಕ್ ನಿರ್ವಹಣೆ ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ...",\n    vetPatie'
+vetPatientsComingSoon at 40485: 'vetPatientsComingSoon: "Patient management coming soon...",\n    vetAppointmentsC'
+vetPatientsComingSoon at 81922: 'vetPatientsComingSoon: "मरीज़ प्रबंधन जल्द आ रहा है...",\n    vetAppointmentsComi'
+vetPatientsComingSoon at 143844: 'vetPatientsComingSoon: "ರೋಗಿ ನಿರ್ವಹಣೆ ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ...",\n    vetAppointments'
+vetAppointmentsComingSoon at 40549: 'vetAppointmentsComingSoon: "Appointment management coming soon...",\n    vetLoadi'
+vetAppointmentsComingSoon at 81983: 'vetAppointmentsComingSoon: "अपॉइंटमेंट प्रबंधन जल्द आ रहा है...",\n    vetLoading'
+vetAppointmentsComingSoon at 143909: 'vetAppointmentsComingSoon: "ನೇಮಕಾತಿ ನಿರ್ವಹಣೆ ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ...",\n    vetLoadi'

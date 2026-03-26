@@ -1,0 +1,8 @@
+'disease': 21 occurrences
+'Disease': 63 occurrences
+'salmonella': 0 occurrences
+'Salmonella': 0 occurrences
+'prediction': 0 occurrences
+'Healthy': 0 occurrences
+'Newcastle': 9 occurrences
+'Coccidiosis': 1 occurrences
