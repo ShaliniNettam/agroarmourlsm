@@ -27,9 +27,10 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
     const name = formData.get('name') as string;
     const email = formData.get('email') as string;
     const phone = formData.get('phone') as string;
+    const password = formData.get('password') as string;
 
     try {
-      const response = await authApi.register(phone, '', name, email);
+      const response = await authApi.register(phone, password, name, email);
       onAuthSuccess(response.user);
     } catch (err: any) {
       setError(err.message);
@@ -46,9 +47,10 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email') as string;
     const phone = formData.get('phone') as string;
+    const password = formData.get('password') as string;
 
     try {
-      const response = await authApi.login(phone, '', email);
+      const response = await authApi.login(phone, password, email);
       onAuthSuccess(response.user);
     } catch (err: any) {
       setError(err.message);
@@ -137,6 +139,17 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
                     disabled={isLoading}
                   />
                 </div>
+                <div className="space-y-2">
+                  <Label htmlFor="register-password">Password</Label>
+                  <Input
+                    id="register-password"
+                    name="password"
+                    type="password"
+                    required
+                    placeholder="••••••••"
+                    disabled={isLoading}
+                  />
+                </div>
                 {error && (
                   <div className="text-red-500 text-sm bg-red-50 border border-red-200 rounded-md p-2">
                     {error}
@@ -181,6 +194,17 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
                     type="tel"
                     required
                     placeholder="+91 9876543210"
+                    disabled={isLoading}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="login-password">Password</Label>
+                  <Input
+                    id="login-password"
+                    name="password"
+                    type="password"
+                    required
+                    placeholder="••••••••"
                     disabled={isLoading}
                   />
                 </div>

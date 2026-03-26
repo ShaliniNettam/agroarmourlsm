@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   pwdHash: {
     type: String,
-    default: ''
+    required: true
   },
   name: {
     type: String,

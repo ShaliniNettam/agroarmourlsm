@@ -7,8 +7,8 @@ const register = async (req, res) => {
     const { phone, email, password, name } = req.body;
 
     // Validate input
-    if (!phone || !name) {
-      return res.status(400).json({ error: 'Phone and name are required' });
+    if (!phone || !name || !password) {
+      return res.status(400).json({ error: 'Phone, name and password are required' });
     }
 
     // Check if user already exists
@@ -59,12 +59,14 @@ const login = async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // Check password if provided
-    if (password && user.pwdHash) {
-      const isPasswordValid = await user.comparePassword(password);
-      if (!isPasswordValid) {
-        return res.status(401).json({ error: 'Invalid credentials' });
-      }
+    // Check password
+    if (!password || !user.pwdHash) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    const isPasswordValid = await user.comparePassword(password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     // Generate token
