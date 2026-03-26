@@ -4,6 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Upload, Camera, AlertCircle, Clipboard } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { detectionApi } from '../Backend/api/todoApi';
+
+const ML_API_URL = import.meta.env.VITE_ML_API_URL || 'http://localhost:5000';
 
 const diseaseKeyMap: Record<string, string> = {
   'Healthy': 'diseaseHealthy',
@@ -70,7 +73,7 @@ const DiseaseDetection: React.FC = () => {
       const formData = new FormData();
       formData.append('image', blob, 'chicken.jpg');
 
-      const response = await fetch('http://localhost:5000/predict', {
+      const response = await fetch(`${ML_API_URL}/predict`, {
         method: 'POST',
         body: formData,
       });
@@ -82,6 +85,19 @@ const DiseaseDetection: React.FC = () => {
 
       const result = await response.json();
       setPrediction(result);
+
+      // Save to history
+      try {
+        await detectionApi.save({
+          imageUrl: selectedImage, // In production, this should be a Cloudinary/S3 URL
+          disease: result.disease,
+          confidence: result.confidence,
+          allPredictions: result.all_predictions,
+          recommendation: result.disease !== 'Healthy' ? t('recommendationText') : undefined
+        });
+      } catch (saveError) {
+        console.error('Failed to save detection to history:', saveError);
+      }
 
       toast({
         title: t('detectionResult'),

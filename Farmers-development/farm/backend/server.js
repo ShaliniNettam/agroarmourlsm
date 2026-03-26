@@ -17,6 +17,7 @@ const paymentRoutes = require('./routes/payment.routes');
 const gpsTrackingRoutes = require('./routes/gpsTracking.routes');
 const doctorClinicRoutes = require('./routes/doctorClinic.routes');
 const appointmentRoutes = require('./routes/appointment.routes');
+const diseaseDetectionRoutes = require('./routes/diseaseDetection.routes');
 
 // Import middleware
 const errorHandler = require('./middleware/errorHandler');
@@ -78,6 +79,7 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/gps', gpsTrackingRoutes);
 app.use('/api/medical', doctorClinicRoutes);
 app.use('/api/appointments', appointmentRoutes);
+app.use('/api/detections', diseaseDetectionRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {
@@ -92,7 +94,8 @@ app.get('/', (req, res) => {
       payments: '/api/payments',
       gps: '/api/gps',
       medical: '/api/medical',
-      appointments: '/api/appointments'
+      appointments: '/api/appointments',
+      detections: '/api/detections'
     }
   });
 });

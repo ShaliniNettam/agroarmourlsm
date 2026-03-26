@@ -256,3 +256,36 @@ export const notificationApi = {
     return true;
   }
 };
+
+// Disease Detection API
+export const detectionApi = {
+  // Save a detection result
+  save: async (data: {
+    imageUrl: string;
+    disease: string;
+    confidence: number;
+    allPredictions: Record<string, number>;
+    recommendation?: string;
+  }) => {
+    const response = await fetch(`${API_BASE}/detections`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to save detection: ${response.statusText}`);
+    }
+    return response.json();
+  },
+
+  // Get detection history
+  getHistory: async () => {
+    const response = await fetch(`${API_BASE}/detections/history`, {
+      headers: getAuthHeaders()
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to fetch history: ${response.statusText}`);
+    }
+    return response.json();
+  }
+};
