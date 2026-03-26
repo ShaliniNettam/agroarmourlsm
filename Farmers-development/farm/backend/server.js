@@ -2,6 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const dns = require('dns');
+
+// Override DNS to bypass SRV lookup failures in restricted networks
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 // Load environment variables
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });

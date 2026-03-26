@@ -1,4 +1,9 @@
 const mongoose = require('mongoose');
+const dns = require('dns');
+
+// Override DNS to bypass SRV lookup failures
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 require('dotenv').config();
 
 async function testConnection() {

@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
+const dns = require('dns');
+
+// Override DNS to bypass SRV lookup failures
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 // Load environment variables
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
