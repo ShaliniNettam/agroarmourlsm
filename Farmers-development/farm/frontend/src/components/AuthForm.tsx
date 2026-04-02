@@ -8,6 +8,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import signupBg from '@/assets/auth-bg-sunset.png';
 import { Eye, EyeOff, Phone, Mail, User, Lock, ArrowRight, Leaf, ShieldAlert } from 'lucide-react';
 import { trackEvent, identifyUser } from '@/lib/mixpanel';
+import { trackAmplitudeEvent, identifyAmplitudeUser } from '@/lib/amplitude';
 
 interface AuthFormProps {
   onAuthSuccess: (user: any) => void;
@@ -44,6 +45,18 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
         'Phone': phone,
         '$created': new Date().toISOString()
       });
+      
+      // Track Amplitude Registration Event
+      trackAmplitudeEvent('Registration Success', {
+        'Name': name,
+        'Phone': phone,
+        'Email': email
+      });
+      identifyAmplitudeUser(phone, {
+        'name': name,
+        'email': email,
+        'phone': phone,
+      });
 
       onAuthSuccess(response.user);
     } catch (err: any) {
@@ -72,6 +85,15 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
       identifyUser(phone, {
         '$email': email,
         '$last_login': new Date().toISOString()
+      });
+      
+      // Track Amplitude Login Event
+      trackAmplitudeEvent('Login Success', {
+        'Phone': phone,
+        'Email': email
+      });
+      identifyAmplitudeUser(phone, {
+        'email': email,
       });
 
       onAuthSuccess(response.user);
