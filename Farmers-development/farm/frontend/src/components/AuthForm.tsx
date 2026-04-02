@@ -7,6 +7,7 @@ import LanguageSelector from './LanguageSelector';
 import { useLanguage } from '@/contexts/LanguageContext';
 import signupBg from '@/assets/auth-bg-sunset.png';
 import { Eye, EyeOff, Phone, Mail, User, Lock, ArrowRight, Leaf, ShieldAlert } from 'lucide-react';
+import { trackEvent, identifyUser } from '@/lib/mixpanel';
 
 interface AuthFormProps {
   onAuthSuccess: (user: any) => void;
@@ -32,20 +33,17 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
       const response = await authApi.register(phone, password, name, email);
       
       // Track Registration Event
-      if ((window as any).mixpanel) {
-        (window as any).mixpanel.track('Registration Success', {
-          'Name': name,
-          'Phone': phone,
-          'Email': email
-        });
-        (window as any).mixpanel.identify(phone);
-        (window as any).mixpanel.people.set({
-          '$name': name,
-          '$email': email,
-          'Phone': phone,
-          '$created': new Date().toISOString()
-        });
-      }
+      trackEvent('Registration Success', {
+        'Name': name,
+        'Phone': phone,
+        'Email': email
+      });
+      identifyUser(phone, {
+        '$name': name,
+        '$email': email,
+        'Phone': phone,
+        '$created': new Date().toISOString()
+      });
 
       onAuthSuccess(response.user);
     } catch (err: any) {
@@ -65,6 +63,17 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
     const password = formData.get('password') as string;
     try {
       const response = await authApi.login(phone, password, email);
+      
+      // Track Login Event
+      trackEvent('Login Success', {
+        'Phone': phone,
+        'Email': email
+      });
+      identifyUser(phone, {
+        '$email': email,
+        '$last_login': new Date().toISOString()
+      });
+
       onAuthSuccess(response.user);
     } catch (err: any) {
       setError(err.message);
