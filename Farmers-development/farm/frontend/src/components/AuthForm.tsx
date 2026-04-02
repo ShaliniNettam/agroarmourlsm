@@ -30,6 +30,23 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
     const password = formData.get('password') as string;
     try {
       const response = await authApi.register(phone, password, name, email);
+      
+      // Track Registration Event
+      if ((window as any).mixpanel) {
+        (window as any).mixpanel.track('Registration Success', {
+          'Name': name,
+          'Phone': phone,
+          'Email': email
+        });
+        (window as any).mixpanel.identify(phone);
+        (window as any).mixpanel.people.set({
+          '$name': name,
+          '$email': email,
+          'Phone': phone,
+          '$created': new Date().toISOString()
+        });
+      }
+
       onAuthSuccess(response.user);
     } catch (err: any) {
       setError(err.message);
