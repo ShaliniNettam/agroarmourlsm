@@ -139,36 +139,54 @@ export const todoApi = {
 export const authApi = {
   // Register new user
   register: async (phone: string, password: string, name: string, email?: string) => {
-    const response = await fetch(`${API_BASE}/auth/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone, password, name, email }),
-    });
-    if (!response.ok) {
-      throw new Error(`Registration failed: ${response.statusText}`);
+    try {
+      const response = await fetch(`${API_BASE}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone, password, name, email }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Registration failed: ${response.statusText}`);
+      }
+      const data = await response.json();
+      if (data.token) {
+        localStorage.setItem('authToken', data.token);
+      }
+      return data;
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      if (error.message.includes('fetch')) {
+        throw new Error('Failed to fetch: Connection refused. Is the backend server running on port 5002?');
+      }
+      throw error;
     }
-    const data = await response.json();
-    if (data.token) {
-      localStorage.setItem('authToken', data.token);
-    }
-    return data;
   },
 
   // Login user
   login: async (phone: string, password: string, email?: string) => {
-    const response = await fetch(`${API_BASE}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone, password, email }),
-    });
-    if (!response.ok) {
-      throw new Error(`Login failed: ${response.statusText}`);
+    try {
+      const response = await fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone, password, email }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Login failed: ${response.statusText}`);
+      }
+      const data = await response.json();
+      if (data.token) {
+        localStorage.setItem('authToken', data.token);
+      }
+      return data;
+    } catch (error: any) {
+      console.error('Login error:', error);
+      if (error.message.includes('fetch')) {
+        throw new Error('Failed to fetch: Connection refused. Is the backend server running on port 5002?');
+      }
+      throw error;
     }
-    const data = await response.json();
-    if (data.token) {
-      localStorage.setItem('authToken', data.token);
-    }
-    return data;
   },
 
   // Get user profile
@@ -178,6 +196,20 @@ export const authApi = {
     });
     if (!response.ok) {
       throw new Error(`Failed to get profile: ${response.statusText}`);
+    }
+    return response.json();
+  },
+
+  // Update user profile
+  updateProfile: async (data: { name?: string; email?: string; photo?: string }) => {
+    const response = await fetch(`${API_BASE}/auth/profile`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `Failed to update profile: ${response.statusText}`);
     }
     return response.json();
   },
@@ -254,6 +286,19 @@ export const notificationApi = {
       throw new Error(`Failed to delete notification: ${response.statusText}`);
     }
     return true;
+  },
+
+  // Create a custom notification
+  create: async (data: { type?: string; title: string; message: string; priority?: string; metadata?: Record<string, unknown> }) => {
+    const response = await fetch(`${API_BASE}/notifications`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to create notification: ${response.statusText}`);
+    }
+    return response.json();
   }
 };
 

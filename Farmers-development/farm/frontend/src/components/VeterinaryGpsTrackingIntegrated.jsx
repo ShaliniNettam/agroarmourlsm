@@ -72,14 +72,14 @@ const VeterinaryGpsTracking = () => {
             markerRef.current = new google.maps.Marker({
               position: location,
               map: googleMapRef.current,
-              title: 'Your Location'
+              title: t('yourLocationMarker')
             });
           }
           
           setLoading(false);
         },
         (error) => {
-          alert('Failed to get location. Please enable location access.');
+          alert(t('enableLocationAlert'));
           setLoading(false);
         }
       );
@@ -149,7 +149,7 @@ const VeterinaryGpsTracking = () => {
       return;
     }
     const animal = animalType ? `${animalType} ` : '';
-    const query = `${animal}veterinarian near me`;
+    const query = animalType ? `${t(animalType + 'Option')} ${t('searchVetsNearby')}` : t('searchVetsNearby');
     const zoom = range <= 5 ? 14 : range <= 10 ? 13 : range <= 25 ? 12 : 11;
     const url = `https://www.google.com/maps/search/${encodeURIComponent(query)}/@${currentLocation.lat},${currentLocation.lng},${zoom}z`;
     window.open(url, '_blank');
@@ -282,12 +282,11 @@ const VeterinaryGpsTracking = () => {
                 {vetResults.length > 0
                   ? t('foundVetsTitle', { 
                       count: vetResults.length, 
-                      s: vetResults.length > 1 ? 's' : '', 
-                      animal: animalType || t('allAnimals'), 
+                      animal: animalType ? t(animalType + 'Option') : t('allAnimals'), 
                       range 
                     })
                   : t('noVetsFound', { 
-                      animal: animalType || t('allAnimals'), 
+                      animal: animalType ? t(animalType + 'Option') : t('allAnimals'), 
                       range 
                     })}
               </h2>
@@ -307,7 +306,7 @@ const VeterinaryGpsTracking = () => {
                   <div key={doc._id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
                     <div className="flex items-start justify-between">
                       <h3 className="font-semibold text-gray-900">{doc.name}</h3>
-                      <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full ml-2 whitespace-nowrap">Registered</span>
+                      <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full ml-2 whitespace-nowrap">{t('registeredBadge')}</span>
                     </div>
                     <p className="text-sm text-green-700 font-medium mt-1">{doc.specialization}</p>
                     <p className="text-sm text-gray-600 mt-1">{doc.clinicName}</p>
@@ -323,7 +322,7 @@ const VeterinaryGpsTracking = () => {
                         className="mt-3 w-full text-sm bg-blue-50 text-blue-700 border border-blue-200 py-1.5 rounded hover:bg-blue-100"
                         onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${doc.clinicAddress.coordinates.latitude},${doc.clinicAddress.coordinates.longitude}`, '_blank')}
                       >
-                        🧭 Get Directions
+                        🧭 {t('getDirectionsBtn')}
                       </button>
                     )}
                   </div>

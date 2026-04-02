@@ -13,7 +13,8 @@ import CheckoutModal from "@/components/CheckoutModal";
 import poultryFeedImg from "@/assets/poultry-farm.jpg";
 import vaccineImg from "@/assets/newcastle-disease.jpg";
 import cattleFeedImg from "@/assets/cattle-health.jpg";
-import { useCart } from "@/contexts/CartContext"; // Import useCart hook
+import { useCart } from "@/contexts/CartContext";
+import { notificationApi } from "@/Backend/api/todoApi";
 import {
   Search,
   Filter,
@@ -27,7 +28,12 @@ import {
   Leaf,
   Droplets,
   Shield,
-  Check
+  Check,
+  Sparkles,
+  ShieldCheck,
+  Zap,
+  Tractor,
+  Clock
 } from "lucide-react";
 
 interface MarketplaceItem {
@@ -71,6 +77,8 @@ const Marketplace = () => {
     { id: "all", nameKey: "allProducts", icon: <Package className="w-4 h-4" /> },
     { id: "vaccines", nameKey: "vaccinesLabel", icon: <Shield className="w-4 h-4" /> },
     { id: "feed", nameKey: "animalFeed", icon: <Leaf className="w-4 h-4" /> },
+    { id: "equipment", nameKey: "equipmentLabel", icon: <Package className="w-4 h-4" /> },
+    { id: "fertilizer", nameKey: "fertilizerLabel", icon: <Sparkles className="w-4 h-4" /> },
   ];
 
   const defaultSeller = { name: "AgroArmor Farm Supplies", location: "India", rating: 4.8, phone: "+91 9876543210" };
@@ -79,20 +87,18 @@ const Marketplace = () => {
 
   const marketplaceItems: MarketplaceItem[] = useMemo(() => [
     // Vaccines
-    { id: "v1", name: t("marketplaceItem2Name"), description: t("marketplaceItem2Description"), price: 850, category: "vaccines", seller: defaultSeller, image: vaccineImg, inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "FMD-PV-100", weight: "100 ml", origin: "India", features: [t("marketplaceItem2Feature1"), t("marketplaceItem2Feature2"), t("marketplaceItem2Feature3"), t("marketplaceItem2Feature4")], benefits: [t("marketplaceItem2Benefit1"), t("marketplaceItem2Benefit2"), t("marketplaceItem2Benefit3"), t("marketplaceItem2Benefit4")], infoUrl: "https://www.google.com/search?q=FMD+vaccine(polyvalent)" },
-    { id: "v2", name: t("vaccineItem2Name"), description: t("vaccineItem2Desc"), price: 650, category: "vaccines", seller: defaultSeller, image: vaccineImg, inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "LSD-50", weight: "50 doses", origin: "India", features: [t("vaccineItem2F1"), t("vaccineItem2F2"), t("vaccineItem2F3"), t("vaccineItem2F4")], benefits: [t("vaccineItem2B1"), t("vaccineItem2B2"), t("vaccineItem2B3"), t("vaccineItem2B4")], infoUrl: "https://www.google.com/search?q=LSD+vaccine" },
-    { id: "v3", name: t("vaccineItem3Name"), description: t("vaccineItem3Desc"), price: 720, category: "vaccines", seller: defaultSeller, image: vaccineImg, inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "BVD-100", weight: "100 ml", origin: "India", features: [t("vaccineItem3F1"), t("vaccineItem3F2"), t("vaccineItem3F3"), t("vaccineItem3F4")], benefits: [t("vaccineItem3B1"), t("vaccineItem3B2"), t("vaccineItem3B3"), t("vaccineItem3B4")], infoUrl: "https://www.google.com/search?q=bvd+vaccine" },
-    { id: "v4", name: t("vaccineItem4Name"), description: t("vaccineItem4Desc"), price: 580, category: "vaccines", seller: defaultSeller, image: vaccineImg, inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "IBR-M-50", weight: "50 doses", origin: "India", features: [t("vaccineItem4F1"), t("vaccineItem4F2"), t("vaccineItem4F3"), t("vaccineItem4F4")], benefits: [t("vaccineItem4B1"), t("vaccineItem4B2"), t("vaccineItem4B3"), t("vaccineItem4B4")], infoUrl: "https://www.google.com/search?q=IBR+Marker+vaccine" },
-    { id: "v5", name: t("vaccineItem5Name"), description: t("vaccineItem5Desc"), price: 450, category: "vaccines", seller: defaultSeller, image: vaccineImg, inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "ND-LR-200", weight: "200 doses", origin: "India", features: [t("vaccineItem5F1"), t("vaccineItem5F2"), t("vaccineItem5F3"), t("vaccineItem5F4")], benefits: [t("vaccineItem5B1"), t("vaccineItem5B2"), t("vaccineItem5B3"), t("vaccineItem5B4")], infoUrl: "https://www.google.com/search?q=Newcastle+vaccine(Lasota,R2B)" },
-    { id: "v6", name: t("vaccineItem6Name"), description: t("vaccineItem6Desc"), price: 380, category: "vaccines", seller: defaultSeller, image: vaccineImg, inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "FP-100", weight: "100 doses", origin: "India", features: [t("vaccineItem6F1"), t("vaccineItem6F2"), t("vaccineItem6F3"), t("vaccineItem6F4")], benefits: [t("vaccineItem6B1"), t("vaccineItem6B2"), t("vaccineItem6B3"), t("vaccineItem6B4")], infoUrl: "https://www.google.com/search?q=fowl+pox+vaccine" },
-    { id: "v7", name: t("vaccineItem7Name"), description: t("vaccineItem7Desc"), price: 420, category: "vaccines", seller: defaultSeller, image: vaccineImg, inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "IB-200", weight: "200 doses", origin: "India", features: [t("vaccineItem7F1"), t("vaccineItem7F2"), t("vaccineItem7F3"), t("vaccineItem7F4")], benefits: [t("vaccineItem7B1"), t("vaccineItem7B2"), t("vaccineItem7B3"), t("vaccineItem7B4")], infoUrl: "https://www.google.com/search?q=IB+vaccine" },
+    { id: "v1", name: t("marketplaceItem2Name"), description: t("marketplaceItem2Description"), price: 850, category: "vaccines", seller: defaultSeller, image: "https://images.unsplash.com/photo-1618015359908-7bfdd389c9c1?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "FMD-PV-100", weight: "100 ml", origin: "India", features: [t("marketplaceItem2Feature1"), t("marketplaceItem2Feature2"), t("marketplaceItem2Feature3"), t("marketplaceItem2Feature4")], benefits: [t("marketplaceItem2Benefit1"), t("marketplaceItem2Benefit2"), t("marketplaceItem2Benefit3"), t("marketplaceItem2Benefit4")] },
+    { id: "v2", name: t("vaccineItem2Name"), description: t("vaccineItem2Desc"), price: 650, category: "vaccines", seller: defaultSeller, image: "https://images.unsplash.com/photo-1584362917165-526a968579e8?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "LSD-50", weight: "50 doses", origin: "India", features: [t("vaccineItem2F1"), t("vaccineItem2F2"), t("vaccineItem2F3"), t("vaccineItem2F4")], benefits: [t("vaccineItem2B1"), t("vaccineItem2B2"), t("vaccineItem2B3"), t("vaccineItem2B4")] },
+    { id: "v3", name: t("vaccineItem3Name"), description: t("vaccineItem3Desc"), price: 720, category: "vaccines", seller: defaultSeller, image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "BVD-100", weight: "100 ml", origin: "India", features: [t("vaccineItem3F1"), t("vaccineItem3F2"), t("vaccineItem3F3"), t("vaccineItem3F4")], benefits: [t("vaccineItem3B1"), t("vaccineItem3B2"), t("vaccineItem3B3"), t("vaccineItem3B4")] },
+    { id: "v5", name: t("vaccineItem5Name"), description: t("vaccineItem5Desc"), price: 450, category: "vaccines", seller: defaultSeller, image: "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "ND-LR-200", weight: "200 doses", origin: "India", features: [t("vaccineItem5F1"), t("vaccineItem5F2"), t("vaccineItem5F3"), t("vaccineItem5F4")], benefits: [t("vaccineItem5B1"), t("vaccineItem5B2"), t("vaccineItem5B3"), t("vaccineItem5B4")] },
+    
     // Feed & Fodder
-    { id: "f1", name: t("vaccineItem9Name"), description: t("vaccineItem9Desc"), price: 120, category: "feed", seller: defaultSeller, image: poultryFeedImg, inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "FOD-1", weight: "per bundle", origin: "Local", features: [t("vaccineItem9F1"), t("vaccineItem9F2"), t("vaccineItem9F3"), t("vaccineItem9F4")], benefits: [t("vaccineItem9B1"), t("vaccineItem9B2"), t("vaccineItem9B3"), t("vaccineItem9B4")], infoUrl: "https://www.google.com/search?q=fodder" },
-    { id: "f2", name: t("vaccineItem10Name"), description: t("vaccineItem10Desc"), price: 80, category: "feed", seller: defaultSeller, image: cattleFeedImg, inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "HAY-1", weight: "per kg", origin: "Local", features: [t("vaccineItem10F1"), t("vaccineItem10F2"), t("vaccineItem10F3"), t("vaccineItem10F4")], benefits: [t("vaccineItem10B1"), t("vaccineItem10B2"), t("vaccineItem10B3"), t("vaccineItem10B4")], infoUrl: "https://www.google.com/search?q=hay" },
-    { id: "f3", name: t("vaccineItem11Name"), description: t("vaccineItem11Desc"), price: 950, category: "feed", seller: defaultSeller, image: cattleFeedImg, inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "CF-50", weight: "50 kg", origin: "India", features: [t("vaccineItem11F1"), t("vaccineItem11F2"), t("vaccineItem11F3"), t("vaccineItem11F4")], benefits: [t("vaccineItem11B1"), t("vaccineItem11B2"), t("vaccineItem11B3"), t("vaccineItem11B4")], infoUrl: "https://www.google.com/search?q=cattle+feed+concentrate" },
-    { id: "f4", name: t("vaccineItem12Name"), description: t("vaccineItem12Desc"), price: 750, category: "feed", seller: defaultSeller, image: poultryFeedImg, inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "MASH-50", weight: "50 kg", origin: "India", features: [t("vaccineItem12F1"), t("vaccineItem12F2"), t("vaccineItem12F3"), t("vaccineItem12F4")], benefits: [t("vaccineItem12B1"), t("vaccineItem12B2"), t("vaccineItem12B3"), t("vaccineItem12B4")], infoUrl: "https://www.google.com/search?q=mash+feed" },
-    { id: "f5", name: t("vaccineItem13Name"), description: t("vaccineItem13Desc"), price: 880, category: "feed", seller: defaultSeller, image: poultryFeedImg, inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "PEL-50", weight: "50 kg", origin: "India", features: [t("vaccineItem13F1"), t("vaccineItem13F2"), t("vaccineItem13F3"), t("vaccineItem13F4")], benefits: [t("vaccineItem13B1"), t("vaccineItem13B2"), t("vaccineItem13B3"), t("vaccineItem13B4")], infoUrl: "https://www.google.com/search?q=pellet+feed" },
-    { id: "f6", name: t("vaccineItem14Name"), description: t("vaccineItem14Desc"), price: 650, category: "feed", seller: defaultSeller, image: cattleFeedImg, inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "GM-25", weight: "25 kg", origin: "India", features: [t("vaccineItem14F1"), t("vaccineItem14F2"), t("vaccineItem14F3"), t("vaccineItem14F4")], benefits: [t("vaccineItem14B1"), t("vaccineItem14B2"), t("vaccineItem14B3"), t("vaccineItem14B4")], infoUrl: "https://www.google.com/search?q=grain+mix" },
+    { id: "f3", name: t("vaccineItem11Name"), description: t("vaccineItem11Desc"), price: 950, category: "feed", seller: defaultSeller, image: "https://images.unsplash.com/photo-1586521995568-39abaa0c2311?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "CF-50", weight: "50 kg", origin: "India", features: [t("vaccineItem11F1"), t("vaccineItem11F2"), t("vaccineItem11F3"), t("vaccineItem11F4")], benefits: [t("vaccineItem11B1"), t("vaccineItem11B2"), t("vaccineItem11B3"), t("vaccineItem11B4")], infoUrl: "https://www.google.com/search?q=cattle+feed" },
+    { id: "f4", name: t("vaccineItem12Name"), description: t("vaccineItem12Desc"), price: 750, category: "feed", seller: defaultSeller, image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "MASH-50", weight: "50 kg", origin: "India", features: [t("vaccineItem12F1"), t("vaccineItem12F2"), t("vaccineItem12F3"), t("vaccineItem12F4")], benefits: [t("vaccineItem12B1"), t("vaccineItem12B2"), t("vaccineItem12B3"), t("vaccineItem12B4")], infoUrl: "https://www.google.com/search?q=mash+feed" },
+    
+    // Equipment & Fertilizers
+    { id: "e1", name: "Heavy Duty Farm Tractor", description: "Modern tractor with 50HP engine for plowing and tilling.", price: 540000, category: "equipment", seller: defaultSeller, image: "https://images.unsplash.com/photo-1592878904946-b3cd8ae52583?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: "Equipment", sku: "TRC-50", weight: "2200 kg", origin: "India", features: ["50 HP", "Power Steering", "Includes Attachments"], benefits: ["High Efficiency", "Saves Fuel", "Long Lifespan"], infoUrl: "https://www.google.com/search?q=farm+tractor" },
+    { id: "e2", name: "Organic Nitrogen Fertilizer", description: "100% organic fertilizer for rapid crop growth.", price: 450, category: "fertilizer", seller: defaultSeller, image: "https://images.unsplash.com/photo-1628352081506-83c43123ed6d?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: "Fertilizer", sku: "ONF-25", weight: "25 kg", origin: "India", features: ["100% Organic", "Fast Release", "Soil Friendly"], benefits: ["Increases Yield", "Improves Soil Health", "Eco-friendly"], infoUrl: "https://www.google.com/search?q=organic+fertilizer" },
   ], [t]);
 
   const filteredItems = marketplaceItems.filter(item => {
@@ -128,7 +134,7 @@ const Marketplace = () => {
     });
   };
 
-  const handleAddToCart = (item: MarketplaceItem) => {
+  const handleAddToCart = async (item: MarketplaceItem) => {
     if (!item.inStock) {
       toast({
         title: t('outOfStockTitle'),
@@ -138,11 +144,24 @@ const Marketplace = () => {
       return;
     }
 
-    addToCart(item); // Use addToCart from context
+    addToCart(item);
     toast({
-      title: t('addedToCartTitle'),
-      description: t('addedToCartDescription', { item: item.name }),
+      title: '🛒 Added to Cart!',
+      description: `${item.name} has been added to your cart.`,
     });
+
+    // Fire a backend notification so it appears in Notification Center
+    try {
+      await notificationApi.create({
+        type: 'marketplace',
+        title: '🛒 Item Added to Cart',
+        message: `You added "${item.name}" (₹${item.price}) to your cart. Open the cart icon to review your order.`,
+        priority: 'low',
+        metadata: { itemId: item.id, itemName: item.name, price: item.price, category: item.category }
+      });
+    } catch {
+      // Notification creation is non-critical; ignore silently
+    }
   };
 
   const handleViewDetails = (item: MarketplaceItem) => {
@@ -175,10 +194,29 @@ const Marketplace = () => {
       <Navbar />
       
       <div className="container mx-auto px-4 pt-24 pb-12 max-w-7xl">
+        {/* Promotional Banner */}
+        <div className="mb-10 w-full overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 to-green-400 p-8 shadow-xl text-white relative">
+          <div className="absolute right-0 top-0 opacity-20 transform translate-x-1/4 -translate-y-1/4">
+             <Tractor className="w-64 h-64" />
+          </div>
+          <div className="relative z-10">
+            <Badge className="bg-white/20 hover:bg-white/30 text-white mb-4 border-none text-sm px-3 py-1 backdrop-blur-sm">{t('marketplacePromoScheme')}</Badge>
+            <h1 className="text-3xl md:text-5xl font-extrabold mb-4 leading-tight">
+              {t('marketplacePromoTitle')}
+            </h1>
+            <p className="text-emerald-50 text-lg mb-6 max-w-xl">
+              {t('marketplacePromoDesc')}
+            </p>
+            <Button size="lg" className="bg-white text-emerald-700 hover:bg-emerald-50 font-bold border-none shadow-lg">
+              {t('marketplacePromoButton')} <Sparkles className="ml-2 w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">{t('marketplaceTitle')}</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold mb-3">{t('marketplaceTitle')}</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             {t('marketplaceSubtitle')}
           </p>
         </div>
@@ -253,72 +291,142 @@ const Marketplace = () => {
           </Card>
         )}
 
+        {/* Smart Recommendations */}
+        <div className="mb-12">
+            <div className="flex items-center gap-2 mb-6">
+              <div className="p-3 bg-amber-100 rounded-xl shadow-inner">
+                 <Sparkles className="w-6 h-6 text-amber-600" />
+              </div>
+              <div>
+                 <h2 className="text-2xl font-bold text-slate-900">{t('recommendedForYou')}</h2>
+                 <p className="text-sm text-slate-500 font-medium">{t('recommendationReason')}</p>
+              </div>
+           </div>
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {marketplaceItems.slice(0, 3).map((item) => (
+                <Card key={`rec-${item.id}`} className="border-2 border-primary/20 hover:border-primary/40 transition-colors bg-primary/5 shadow-elegant relative overflow-hidden group">
+                   <div className="absolute top-3 right-3 z-10">
+                      <Badge className="bg-primary text-white border-none shadow-md px-2 py-1">
+                         <Zap className="w-3 h-3 mr-1" />
+                         {t('bestMatchBadge')}
+                      </Badge>
+                   </div>
+                   <CardContent className="p-6">
+                      <div className="flex gap-4">
+                         <div className="w-24 h-24 rounded-xl overflow-hidden shrink-0 border border-white/50">
+                            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                         </div>
+                         <div className="flex-1 space-y-2">
+                            <h3 className="font-bold text-slate-900 leading-tight">{item.name}</h3>
+                            <p className="text-[10px] text-slate-500 line-clamp-2">{item.description}</p>
+                            <div className="flex items-center justify-between pt-1">
+                               <span className="text-lg font-bold text-primary">₹{item.price}</span>
+                               <Button size="sm" variant="ghost" className="h-8 w-8 p-0 text-primary hover:bg-primary/10" onClick={() => handleAddToCart(item)}>
+                                  <ShoppingCart className="w-4 h-4" />
+                               </Button>
+                            </div>
+                         </div>
+                      </div>
+                   </CardContent>
+                </Card>
+              ))}
+           </div>
+        </div>
+
         {/* Products Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex items-center gap-2 mb-6">
+           <Package className="w-5 h-5 text-slate-400" />
+           <h2 className="text-2xl font-bold text-slate-900">{t('allProducts')}</h2>
+        </div>
+        
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {filteredItems.map((item) => (
             <Card key={item.id} className="hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="aspect-video bg-muted rounded-md mb-4 overflow-hidden">
-                  <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                <div className="aspect-video bg-muted rounded-md mb-4 overflow-hidden relative group">
+                  <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <div className="absolute top-2 left-2 flex gap-1">
+                     <Badge className="bg-white/90 backdrop-blur-sm text-emerald-700 hover:bg-white border-emerald-100 flex items-center gap-1 py-1">
+                        <ShieldCheck className="w-3 h-3" />
+                        {t('verifiedBadge') === 'verifiedBadge' ? 'Verified Seller' : t('verifiedBadge')}
+                     </Badge>
+                  </div>
                 </div>
-                <CardTitle className="text-lg">{item.name}</CardTitle>
+                <CardTitle className="text-lg flex items-center justify-between">
+                   {item.name}
+                </CardTitle>
                 <CardDescription className="text-sm">
                   {item.description}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold">₹{item.price}</span>
-                  <Badge variant="secondary">
+              <CardContent className="space-y-4 pt-2">
+                <div className="flex items-end justify-between">
+                  <div>
+                     <span className="text-xs text-slate-400 line-through block mb-0.5">₹{item.price + 150}</span>
+                     <span className="text-2xl font-extrabold text-slate-900">₹{item.price}</span>
+                  </div>
+                  <Badge variant="secondary" className="bg-slate-100 text-slate-700">
                     {item.categoryLabel}
                   </Badge>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MapPin className="w-4 h-4" />
-                  <span>{item.seller.location}</span>
+                <div className="flex items-center gap-4 text-sm font-medium">
+                  <div className="flex items-center text-amber-500 bg-amber-50 px-2 py-1 rounded-md">
+                    <Star className="w-3 h-3 mr-1 fill-amber-500" />
+                    {item.seller.rating} <span className="text-slate-400 text-xs ml-1">(120)</span>
+                  </div>
+                  <div className="text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md flex items-center">
+                    <Truck className="w-3 h-3 mr-1" /> {t('deliveryTomorrow') === 'deliveryTomorrow' ? 'Next Day Delivery' : t('deliveryTomorrow')}
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm">
-                  <Star className="w-4 h-4 text-yellow-500" />
-                  <span>{item.seller.rating}</span>
-                  <span className="text-muted-foreground">({item.seller.name})</span>
+                <div className="flex items-center gap-2 text-xs font-semibold text-rose-500 bg-rose-50 p-2 rounded-md">
+                   {item.inStock ? (
+                      <>
+                        <Check className="w-3 h-3 text-emerald-500" /> 
+                        <span className="text-emerald-600">In Stock - Ready to Ship</span>
+                      </>
+                   ) : (
+                      <>
+                        <Clock className="w-3 h-3" /> 
+                        {t('stockLeft', { count: 5 }) === 'stockLeft' ? 'Low Stock: Only 5 remaining!' : t('stockLeft', { count: 5 })}
+                      </>
+                   )}
+                </div>
+
+                <div className="flex items-center gap-2 text-sm text-muted-foreground pb-2 border-b border-slate-100">
+                  <MapPin className="w-4 h-4 text-slate-400" />
+                  <span>{item.seller.name} • {item.seller.location}</span>
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  {item.infoUrl && (
-                    <Button variant="ghost" size="sm" className="w-full text-primary" asChild>
-                      <a href={item.infoUrl} target="_blank" rel="noopener noreferrer">
-                        View images & info
-                      </a>
-                    </Button>
-                  )}
                   <div className="flex gap-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="flex-1"
-                    onClick={() => handleViewDetails(item)}
-                  >
-                    {t('viewDetails')}
-                  </Button>
-                  <div className="flex gap-2 flex-1">
                     <Button 
+                      variant="outline" 
                       size="sm" 
-                      className="flex-1"
-                      onClick={() => handleAddToCart(item)}
-                      disabled={!item.inStock}
+                      className="flex-1 border-primary text-primary hover:bg-primary/5"
+                      onClick={() => handleViewDetails(item)}
                     >
-                      {t('addToCart')}
+                      {t('viewDetails') === 'viewDetails' ? 'View Details' : t('viewDetails')}
                     </Button>
-                    <Button
-                      size="sm"
-                      className="flex-1 bg-emerald-600 hover:bg-emerald-700"
-                      onClick={() => handleBuyNow(item)}
-                      disabled={!item.inStock}
-                    >
-                      {t('buyNow')}
-                    </Button>
+                    <div className="flex gap-2 flex-1">
+                      <Button 
+                        size="sm" 
+                        className="flex-1 bg-amber-500 hover:bg-amber-600 font-semibold"
+                        onClick={() => handleAddToCart(item)}
+                        disabled={!item.inStock}
+                      >
+                         <ShoppingCart className="w-4 h-4 mr-1" /> Add
+                      </Button>
+                      <Button
+                        size="sm"
+                        className="flex-1 bg-emerald-600 hover:bg-emerald-700 font-semibold"
+                        onClick={() => handleBuyNow(item)}
+                        disabled={!item.inStock}
+                      >
+                        Buy Now
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -339,146 +447,89 @@ const Marketplace = () => {
         )}
       </div>
 
-      {/* Product Details Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="text-2xl">{selectedItem?.name}</DialogTitle>
-            <DialogDescription>
-              {selectedItem?.description}
-            </DialogDescription>
-          </DialogHeader>
-
+        <DialogContent className="max-w-4xl p-0 overflow-hidden bg-slate-50 border-none shadow-2xl">
           {selectedItem && (
-            <div className="space-y-6">
-              <div className="aspect-video bg-muted rounded-md overflow-hidden">
-                <img src={selectedItem.image} alt={selectedItem.name} className="w-full h-full object-cover" />
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="bg-white p-6 flex flex-col justify-center items-center relative">
+                 <div className="absolute top-4 left-4 z-10 space-y-2">
+                    <Badge className="bg-emerald-600 text-white border-none shadow-sm block w-fit py-1 px-3">
+                       {selectedItem.categoryLabel}
+                    </Badge>
+                 </div>
+                 <div className="w-full aspect-square rounded-2xl overflow-hidden shadow-sm border border-slate-100">
+                    <img src={selectedItem.image} alt={selectedItem.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                 </div>
               </div>
-              {selectedItem.infoUrl && (
-                <Button variant="outline" size="sm" asChild>
-                  <a href={selectedItem.infoUrl} target="_blank" rel="noopener noreferrer">
-                    View images & more info
-                  </a>
-                </Button>
-              )}
-
-              <div className="grid grid-cols-2 gap-4">
+              
+              <div className="p-8 space-y-6 flex flex-col justify-between">
                 <div>
-                  <h4 className="font-semibold mb-2">{t('priceLabel')}</h4>
-                  <p className="text-2xl font-bold">₹{selectedItem.price}</p>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">{t('availabilityLabel')}</h4>
-                  <Badge variant={selectedItem.inStock ? "default" : "secondary"}>
-                    {selectedItem.inStock ? t('inStock') : t('outOfStock')}
-                  </Badge>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">{t('marketplaceSku')}</h4>
-                  <p className="text-sm text-muted-foreground">{selectedItem.sku}</p>
-                </div>
-                {selectedItem.weight && (
-                  <div>
-                    <h4 className="font-semibold mb-2">{t('marketplaceWeight')}</h4>
-                    <p className="text-sm text-muted-foreground">{selectedItem.weight}</p>
-                  </div>
-                )}
-                {selectedItem.origin && (
-                  <div>
-                    <h4 className="font-semibold mb-2">{t('marketplaceOrigin')}</h4>
-                    <p className="text-sm text-muted-foreground">{selectedItem.origin}</p>
-                  </div>
-                )}
-              </div>
+                   <h2 className="text-3xl font-extrabold text-slate-800 mb-2">{selectedItem.name}</h2>
+                   <div className="flex items-center gap-3 mb-6 border-b border-slate-200 pb-4">
+                      <span className="text-3xl font-black text-emerald-600">₹{selectedItem.price}</span>
+                      <span className="text-lg text-slate-400 line-through">₹{selectedItem.price + 150}</span>
+                      <Badge variant={selectedItem.inStock ? "default" : "secondary"} className="ml-auto bg-emerald-100 text-emerald-800 hover:bg-emerald-200 shadow-none border border-emerald-200">
+                        {selectedItem.inStock ? 'In Stock & Ready' : 'Out of Stock'}
+                      </Badge>
+                   </div>
+                   
+                   <p className="text-slate-600 leading-relaxed text-base mb-6">
+                     {selectedItem.description}
+                   </p>
 
-              <div>
-                <h4 className="font-semibold mb-2">{t('featuresLabel')}</h4>
-                <ul className="space-y-1">
-                  {selectedItem.features.map((feature, index) => (
-                    <li key={index} className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                   <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex gap-3 items-center">
+                         <div className="bg-emerald-100 p-2 rounded-lg text-emerald-600"><Shield className="w-5 h-5"/></div>
+                         <div>
+                            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Brand</p>
+                            <p className="font-bold text-slate-800 text-sm">AgroArmor Certified</p>
+                         </div>
+                      </div>
+                      <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex gap-3 items-center">
+                         <div className="bg-blue-100 p-2 rounded-lg text-blue-600"><Package className="w-5 h-5"/></div>
+                         <div>
+                            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">SKU</p>
+                            <p className="font-bold text-slate-800 text-sm">{selectedItem.sku}</p>
+                         </div>
+                      </div>
+                   </div>
 
-              {selectedItem.benefits.length > 0 && (
-                <div>
-                  <h4 className="font-semibold mb-2">{t('marketplaceBenefits')}</h4>
-                  <ul className="space-y-1">
-                    {selectedItem.benefits.map((benefit, index) => (
-                      <li key={index} className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-emerald-600" />
-                        <span className="text-sm">{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
+                   <div className="mb-2">
+                     <h4 className="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2"><Sparkles className="w-4 h-4 text-amber-500"/> Key Features</h4>
+                     <ul className="grid grid-cols-2 gap-y-2 gap-x-4">
+                       {selectedItem.features.map((feature, index) => (
+                         <li key={index} className="flex items-start gap-2">
+                           <Check className="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" />
+                           <span className="text-sm font-medium text-slate-600">{feature}</span>
+                         </li>
+                       ))}
+                     </ul>
+                   </div>
                 </div>
-              )}
 
-              <div>
-                <h4 className="font-semibold mb-2">{t('sellerInfoLabel')}</h4>
-                <div className="bg-muted p-4 rounded-lg space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium">{selectedItem.seller.name}</span>
-                    <div className="flex items-center gap-1">
-                      <Star className="w-4 h-4 text-yellow-500" />
-                      <span className="text-sm">{selectedItem.seller.rating}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <MapPin className="w-4 h-4" />
-                    <span>{selectedItem.seller.location}</span>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button 
-                      size="sm" 
-                      variant="outline"
-                      onClick={() => handleContactSeller(selectedItem.seller)}
-                    >
-                      <Phone className="w-4 h-4 mr-2" />
-                      {t('call')}
-                    </Button>
-                    <Button size="sm" variant="outline">
-                      <MessageCircle className="w-4 h-4 mr-2" />
-                      {t('message')}
-                    </Button>
-                  </div>
+                <div className="flex gap-3 pt-4 shrink-0">
+                  <Button 
+                    onClick={() => {
+                        setIsDialogOpen(false);
+                        handleBuyNow(selectedItem);
+                    }}
+                    disabled={!selectedItem.inStock}
+                    className="flex-1 bg-emerald-600 hover:bg-emerald-700 h-14 text-lg font-bold shadow-lg shadow-emerald-600/20"
+                  >
+                    Buy Now Safely
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                       addToCart(selectedItem);
+                       toast({title: "Added to Cart!", description: `${selectedItem.name} was added to your cart.`});
+                    }}
+                    variant="outline"
+                    disabled={!selectedItem.inStock}
+                    className="flex-1 h-14 border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 text-lg font-bold"
+                  >
+                    <ShoppingCart className="mr-2 w-5 h-5" /> Add to Cart
+                  </Button>
                 </div>
-              </div>
-
-              <div className="flex gap-3">
-                <Button 
-                  variant="outline" 
-                  onClick={() => setIsDialogOpen(false)}
-                  className="flex-1"
-                >
-                  {t('close')}
-                </Button>
-                <Button 
-                  onClick={() => {
-                    if (selectedItem) {
-                      addToCart(selectedItem); // Use addToCart from context
-                    }
-                  }}
-                  disabled={!selectedItem.inStock}
-                  className="flex-1"
-                >
-                  {t('addToCart')}
-                </Button>
-                <Button 
-                  onClick={() => {
-                    if (selectedItem) {
-                      handleBuyNow(selectedItem);
-                      setIsDialogOpen(false);
-                    }
-                  }}
-                  disabled={!selectedItem.inStock}
-                  className="flex-1 bg-emerald-600 hover:bg-emerald-700"
-                >
-                  {t('buyNow')}
-                </Button>
               </div>
             </div>
           )}
@@ -492,15 +543,11 @@ const Marketplace = () => {
           setBuyNowItem(null);
         }}
         items={buyNowItem ? [{
-          name: buyNowItem.name,
-          quantity: 1,
-          price: buyNowItem.price,
-          category: buyNowItem.category
+          ...buyNowItem,
+          quantity: 1
         }] : cart.map(item => ({
-          name: item.name,
-          quantity: item.quantity,
-          price: item.price,
-          category: item.category
+          ...item,
+          quantity: item.quantity || 1
         }))}
         onSuccess={(paymentData) => {
           toast({
@@ -508,7 +555,7 @@ const Marketplace = () => {
             description: t('orderPlacedDescription') || "Your order has been confirmed and will be delivered soon.",
           });
           setBuyNowItem(null);
-          clearCart(); // Use clearCart from context
+          clearCart();
         }}
       />
     </div>

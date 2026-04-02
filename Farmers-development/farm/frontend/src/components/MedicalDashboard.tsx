@@ -179,44 +179,44 @@ const MedicalDashboard: React.FC = () => {
     setDoctorFormEligibilityError(null);
     const name = (doctorData.name || '').trim();
     if (name.length < 2) {
-      setDoctorFormEligibilityError('Please enter a valid name (at least 2 characters).');
-      toast.error('Please enter a valid name.');
+      setDoctorFormEligibilityError(t('vetValidNameError'));
+      toast.error(t('vetValidNameError'));
       return;
     }
     const qualification = (doctorData.qualification || '').trim();
     if (!qualification) {
-      setDoctorFormEligibilityError('Please enter your veterinary qualification (e.g. BVSc, MVSc, DVM).');
-      toast.error('Qualification is required.');
+      setDoctorFormEligibilityError(t('vetValidQualError'));
+      toast.error(t('vetValidQualError'));
       return;
     }
     if (!isValidVetQualification(qualification)) {
-      setDoctorFormEligibilityError('You are not eligible for that. Please enter a valid veterinary qualification (e.g. BVSc, MVSc, DVM).');
-      toast.error('Please enter a valid veterinary qualification (e.g. BVSc, MVSc, DVM).');
+      setDoctorFormEligibilityError(t('vetValidQualError'));
+      toast.error(t('vetValidQualError'));
       return;
     }
     const clinicName = (doctorData.clinicName || '').trim();
     if (clinicName.length < 3) {
-      setDoctorFormEligibilityError('Please enter a valid veterinary clinic or hospital name (at least 3 characters).');
-      toast.error('Please enter a valid clinic name.');
+      setDoctorFormEligibilityError(t('vetClinicMinCharError'));
+      toast.error(t('vetClinicMinCharError'));
       return;
     }
     const exp = typeof doctorData.experience === 'number' ? doctorData.experience : parseInt(String(doctorData.experience), 10);
     if (Number.isNaN(exp) || exp < 0) {
-      setDoctorFormEligibilityError('You are not eligible for that. Experience must be 0 or more years.');
-      toast.error('You are not eligible for that. Please enter a valid experience (0 or more years).');
+      setDoctorFormEligibilityError(t('vetExpError'));
+      toast.error(t('vetExpError'));
       return;
     }
     if (exp > 0) {
       const prevWork = (doctorData.previousWorkPlaceName || '').trim();
       if (prevWork.length < 3) {
-        setDoctorFormEligibilityError('Where did you work previously? Please provide a valid previous workplace name (at least 3 characters).');
-        toast.error('Please enter where you worked previously (at least 3 characters).');
+        setDoctorFormEligibilityError(t('vetPrevWorkError'));
+        toast.error(t('vetPrevWorkError'));
         return;
       }
     }
     try {
       await doctorApi.createDoctor(doctorData);
-      toast.success('Veterinary doctor registered successfully');
+      toast.success(t('vetRegSuccess'));
       setShowDoctorForm(false);
       setDoctorFormExperience('');
       setDoctorFormPreviousWorkPlace('');
@@ -228,7 +228,7 @@ const MedicalDashboard: React.FC = () => {
       }
     } catch (error: unknown) {
       console.error('Failed to create doctor:', error);
-      const msg = error instanceof Error ? error.message : 'Failed to create doctor';
+      const msg = error instanceof Error ? error.message : t('loadErrorMsg');
       setDoctorFormEligibilityError(msg);
       toast.error(msg);
     }
@@ -237,62 +237,62 @@ const MedicalDashboard: React.FC = () => {
   const handleCreateClinic = async (clinicData: any) => {
     try {
       await clinicApi.createClinic(clinicData);
-      toast.success('Clinic created successfully');
+      toast.success(t('clinicCreatedSuccess'));
       setShowClinicForm(false);
       if (activeTab === 'clinics') {
         loadData();
       }
     } catch (error) {
       console.error('Failed to create clinic:', error);
-      toast.error('Failed to create clinic');
+      toast.error(t('loadErrorMsg'));
     }
   };
 
   const handleCreatePatient = async (patientData: any) => {
     try {
       await patientApi.createPatient(patientData);
-      toast.success('Patient created successfully');
+      toast.success(t('patientCreatedSuccess'));
       setShowPatientForm(false);
       if (activeTab === 'patients') {
         loadData();
       }
     } catch (error) {
       console.error('Failed to create patient:', error);
-      toast.error('Failed to create patient');
+      toast.error(t('loadErrorMsg'));
     }
   };
 
   const handleCreateAppointment = async (appointmentData: any) => {
     try {
       await appointmentApi.createAppointment(appointmentData);
-      toast.success('Appointment created successfully');
+      toast.success(t('appointmentCreatedSuccess'));
       setShowAppointmentForm(false);
       if (activeTab === 'appointments') {
         loadData();
       }
     } catch (error) {
       console.error('Failed to create appointment:', error);
-      toast.error('Failed to create appointment');
+      toast.error(t('loadErrorMsg'));
     }
   };
 
   const handleConfirmAppointment = async (id: string) => {
     try {
       await appointmentApi.confirmAppointment(id);
-      toast.success('Appointment confirmed successfully');
+      toast.success(t('appointmentConfirmedSuccess'));
       loadData();
     } catch (error) {
       console.error('Failed to confirm appointment:', error);
-      toast.error('Failed to confirm appointment');
+      toast.error(t('loadErrorMsg'));
     }
   };
 
   const handleCancelAppointment = async (id: string) => {
     try {
-      const reason = prompt('Please enter the reason for cancellation:');
+      const reason = prompt(t('cancelReasonPrompt'));
       if (reason) {
         await appointmentApi.cancelAppointment(id, reason);
-        toast.success('Appointment cancelled successfully');
+        toast.success(t('appointmentCancelledSuccess'));
         loadData();
       }
     } catch (error) {
@@ -326,36 +326,36 @@ const MedicalDashboard: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground mb-2">{t('vetDoctors') || 'Veterinary Doctors'}</h1>
-        <p className="text-muted-foreground">{t('vetDoctorsDesc') || 'Manage veterinary doctors, clinics, and appointments — livestock, poultry & animal care only'}</p>
+        <h1 className="text-3xl font-bold text-foreground mb-2">{t('vetDoctors')}</h1>
+        <p className="text-muted-foreground">{t('vetDoctorsDesc')}</p>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="doctors" className="flex items-center gap-2">
             <Stethoscope className="h-4 w-4" />
-            {t('vetDoctors') || 'Vet Doctors'}
+            {t('vetDoctors')}
             <Badge variant="secondary" className="ml-2">
               {doctors.length}
             </Badge>
           </TabsTrigger>
           <TabsTrigger value="clinics" className="flex items-center gap-2">
             <Building className="h-4 w-4" />
-            {t('vetClinics') || 'Vet Clinics'}
+            {t('vetClinics')}
             <Badge variant="secondary" className="ml-2">
               {clinics.length}
             </Badge>
           </TabsTrigger>
           <TabsTrigger value="patients" className="flex items-center gap-2">
             <Users className="h-4 w-4" />
-            {t('patients') || 'Patients'}
+            {t('patients')}
             <Badge variant="secondary" className="ml-2">
               {patients.length}
             </Badge>
           </TabsTrigger>
           <TabsTrigger value="appointments" className="flex items-center gap-2">
             <Calendar className="h-4 w-4" />
-            {t('appointments') || 'Appointments'}
+            {t('appointments')}
             <Badge variant="secondary" className="ml-2">
               {appointments.length}
             </Badge>
@@ -410,16 +410,16 @@ const MedicalDashboard: React.FC = () => {
                         <SelectValue placeholder={t('vetSpecializationPlaceholder')} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Livestock & Cattle">Livestock & Cattle</SelectItem>
-                        <SelectItem value="Poultry">Poultry</SelectItem>
-                        <SelectItem value="Small Animals">Small Animals</SelectItem>
-                        <SelectItem value="Equine">Equine</SelectItem>
-                        <SelectItem value="Wildlife">Wildlife</SelectItem>
-                        <SelectItem value="Veterinary Surgeon">Veterinary Surgeon</SelectItem>
-                        <SelectItem value="Dairy Animal Health">Dairy Animal Health</SelectItem>
-                        <SelectItem value="Poultry Disease Specialist">Poultry Disease Specialist</SelectItem>
-                        <SelectItem value="Rural Veterinary Practice">Rural Veterinary Practice</SelectItem>
-                        <SelectItem value="Veterinary Public Health">Veterinary Public Health</SelectItem>
+                        <SelectItem value="Livestock & Cattle">{t('specLivestock')}</SelectItem>
+                        <SelectItem value="Poultry">{t('specPoultry')}</SelectItem>
+                        <SelectItem value="Small Animals">{t('specSmallAnimals')}</SelectItem>
+                        <SelectItem value="Equine">{t('specEquine')}</SelectItem>
+                        <SelectItem value="Wildlife">{t('specWildlife')}</SelectItem>
+                        <SelectItem value="Veterinary Surgeon">{t('specSurgeon')}</SelectItem>
+                        <SelectItem value="Dairy Animal Health">{t('specDairy')}</SelectItem>
+                        <SelectItem value="Poultry Disease Specialist">{t('specDiseaseSpecialist')}</SelectItem>
+                        <SelectItem value="Rural Veterinary Practice">{t('specRural')}</SelectItem>
+                        <SelectItem value="Veterinary Public Health">{t('specPublicHealth')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

@@ -11,6 +11,20 @@ import {
 const LanguageSelector = () => {
   const { language, setLanguage } = useLanguage();
 
+  const languages: { code: any; name: string }[] = [
+    { code: 'en', name: 'English' },
+    { code: 'hi', name: 'हिन्दी' },
+    { code: 'kn', name: 'ಕನ್ನಡ' },
+    { code: 'mr', name: 'मराठी' },
+    { code: 'gu', name: 'ગુજરાતી' },
+    { code: 'pa', name: 'ਪੰਜਾਬੀ' },
+    { code: 'bn', name: 'বাংলা' },
+    { code: 'te', name: 'తెలుగు' },
+    { code: 'ta', name: 'தமிழ்' },
+    { code: 'ml', name: 'മലയാളം' },
+    { code: 'or', name: 'ଓଡ଼ିଆ' },
+  ];
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -20,15 +34,11 @@ const LanguageSelector = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setLanguage('en')}>
-          {language === 'en' && '✓ '}English
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setLanguage('hi')}>
-          {language === 'hi' && '✓ '}हिंदी (Hindi)
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setLanguage('kn')}>
-          {language === 'kn' && '✓ '}ಕನ್ನಡ (Kannada)
-        </DropdownMenuItem>
+        {languages.map((lang) => (
+          <DropdownMenuItem key={lang.code} onClick={() => setLanguage(lang.code)}>
+            {language === lang.code && '✓ '}{lang.name}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

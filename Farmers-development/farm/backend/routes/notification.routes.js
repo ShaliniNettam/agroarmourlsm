@@ -7,7 +7,8 @@ const {
   markAllAsRead,
   getVoiceAnnouncements,
   triggerVoiceAnnouncement,
-  deleteNotification
+  deleteNotification,
+  createNotification
 } = require('../controllers/notification.controller');
 const { auth } = require('../middleware/auth');
 
@@ -16,6 +17,7 @@ router.use(auth);
 
 // Notification routes
 router.get('/', getNotifications);
+router.post('/', createNotification);
 router.get('/unread-count', getUnreadCount);
 router.patch('/:id/read', markAsRead);
 router.patch('/mark-all-read', markAllAsRead);

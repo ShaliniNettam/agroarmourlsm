@@ -7,7 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { AlertCircle, CheckCircle2, Bird, Milk } from "lucide-react";
 
 type FarmType = 'poultry' | 'cattle' | null;
 
@@ -138,28 +138,51 @@ const HygieneTest = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
-        <div className="container mx-auto px-4 pt-24 pb-12 max-w-2xl">
-          <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-3xl">{t('testTitle')}</CardTitle>
-              <CardDescription className="text-lg">{t('selectFarmType')}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <Button 
-                className="w-full py-8 text-lg" 
-                onClick={() => setFarmType('poultry')}
+        <div className="container mx-auto px-4 pt-24 pb-12 max-w-4xl">
+           <div className="text-center mb-12">
+              <h1 className="text-4xl font-bold mb-4 text-slate-900">{t('testTitle')}</h1>
+              <p className="text-lg text-slate-500">{t('selectFarmType')}</p>
+           </div>
+           
+           <div className="grid md:grid-cols-2 gap-8">
+              <Card 
+                 className="group cursor-pointer border-2 border-transparent hover:border-primary/50 transition-all duration-500 overflow-hidden shadow-elegant hover:shadow-large"
+                 onClick={() => setFarmType('poultry')}
               >
-                {t('poultryFarm')}
-              </Button>
-              <Button 
-                className="w-full py-8 text-lg" 
-                variant="secondary"
-                onClick={() => setFarmType('cattle')}
+                 <CardContent className="p-0">
+                    <div className="h-48 bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center relative">
+                       <Bird className="w-24 h-24 text-white/20 absolute -bottom-4 -right-4 rotate-12" />
+                       <Bird className="w-20 h-20 text-white relative z-10 group-hover:scale-110 transition-transform duration-500" />
+                    </div>
+                    <div className="p-8 text-center">
+                       <h3 className="text-2xl font-bold text-slate-900 mb-2">{t('poultryFarm')}</h3>
+                       <p className="text-sm text-slate-500">{t('hygienePoultryDesc')}</p>
+                       <Button className="mt-6 w-full bg-primary hover:bg-primary/90 font-bold h-12 rounded-xl">
+                          {t('startAudit')}
+                       </Button>
+                    </div>
+                 </CardContent>
+              </Card>
+
+              <Card 
+                 className="group cursor-pointer border-2 border-transparent hover:border-primary/50 transition-all duration-500 overflow-hidden shadow-elegant hover:shadow-large"
+                 onClick={() => setFarmType('cattle')}
               >
-                {t('cattleFarm')}
-              </Button>
-            </CardContent>
-          </Card>
+                 <CardContent className="p-0">
+                    <div className="h-48 bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center relative">
+                       <Milk className="w-24 h-24 text-white/20 absolute -bottom-4 -right-4 rotate-12" />
+                       <Milk className="w-20 h-20 text-white relative z-10 group-hover:scale-110 transition-transform duration-500" />
+                    </div>
+                    <div className="p-8 text-center">
+                       <h3 className="text-2xl font-bold text-slate-900 mb-2">{t('cattleFarm')}</h3>
+                       <p className="text-sm text-slate-500">{t('hygieneCattleDesc')}</p>
+                       <Button className="mt-6 w-full bg-primary hover:bg-primary/90 font-bold h-12 rounded-xl">
+                          {t('startAudit')}
+                       </Button>
+                    </div>
+                 </CardContent>
+              </Card>
+           </div>
         </div>
       </div>
     );

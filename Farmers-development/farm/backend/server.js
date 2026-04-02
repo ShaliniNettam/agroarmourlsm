@@ -22,6 +22,7 @@ const gpsTrackingRoutes = require('./routes/gpsTracking.routes');
 const doctorClinicRoutes = require('./routes/doctorClinic.routes');
 const appointmentRoutes = require('./routes/appointment.routes');
 const diseaseDetectionRoutes = require('./routes/diseaseDetection.routes');
+const communityRoutes = require('./routes/community.routes');
 
 // Import middleware
 const errorHandler = require('./middleware/errorHandler');
@@ -52,8 +53,8 @@ app.use(cors({
   origin: ["http://16.176.157.113", "http://localhost:8083", "http://localhost:8084", "http://localhost:8085", "http://localhost:8086", "http://127.0.0.1:8083", "http://127.0.0.1:8084", "http://127.0.0.1:8085", "http://127.0.0.1:8086"],
   credentials: true,
 }));
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Health check endpoint
 app.get('/health', async (req, res) => {
@@ -84,6 +85,7 @@ app.use('/api/gps', gpsTrackingRoutes);
 app.use('/api/medical', doctorClinicRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/detections', diseaseDetectionRoutes);
+app.use('/api/community', communityRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {

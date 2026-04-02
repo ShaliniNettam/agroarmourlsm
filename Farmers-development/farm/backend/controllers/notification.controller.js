@@ -134,6 +134,20 @@ const deleteNotification = async (req, res) => {
   }
 };
 
+// Create a custom notification
+const createNotification = async (req, res) => {
+  try {
+    const notification = await notificationService.createCustomNotification(
+      req.user._id,
+      req.body
+    );
+    res.status(201).json(notification);
+  } catch (error) {
+    console.error('Create notification error:', error);
+    res.status(500).json({ error: 'Failed to create notification' });
+  }
+};
+
 module.exports = {
   getNotifications,
   getUnreadCount,
@@ -141,5 +155,6 @@ module.exports = {
   markAllAsRead,
   getVoiceAnnouncements,
   triggerVoiceAnnouncement,
-  deleteNotification
+  deleteNotification,
+  createNotification
 };

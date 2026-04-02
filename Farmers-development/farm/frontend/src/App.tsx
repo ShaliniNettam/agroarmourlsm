@@ -10,16 +10,18 @@ import { authApi } from "@/Backend/api/todoApi";
 import Home from "@/pages/Home.tsx";
 import Awareness from "@/pages/Awareness.tsx";
 import HygieneTest from "@/pages/HygieneTest.tsx";
-import About from "@/pages/About.tsx";
+import Profile from "@/pages/Profile.tsx";
 import NotFound from "@/pages/NotFound.tsx";
 import TodoList from "@/pages/TodoList.tsx";
-import VaccineMarketplaceFinal from "@/pages/VaccineMarketplaceFinal.tsx";
+import Marketplace from "@/pages/Marketplace.tsx";
 import GpsTracking from "@/pages/GpsTracking.jsx";
 import TestPage from "@/pages/TestPage.tsx";
 import MedicalPage from "@/pages/MedicalPage.tsx";
 import SubscriptionPlans from "@/components/SubscriptionPlans.tsx";
 import ComplianceTracker from "@/pages/ComplianceTracker.tsx";
-import { CartProvider } from "@/contexts/CartContext"; // Import CartProvider
+import Community from "@/pages/Community.tsx";
+import VoiceAssistant from "@/components/VoiceAssistant.tsx";
+import { CartProvider } from "@/contexts/CartContext";
 
 const queryClient = new QueryClient();
 
@@ -72,20 +74,24 @@ const AppContent = () => {
           {t('loading')}
         </div>
       ) : user ? (
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/awareness" element={<Awareness />} />
-          <Route path="/hygiene-test" element={<HygieneTest />} />
-          <Route path="/todo-list" element={<TodoList />} />
-          <Route path="/marketplace" element={<VaccineMarketplaceFinal />} />
-          <Route path="/gps-tracking" element={<GpsTracking />} />
-          <Route path="/test" element={<TestPage />} />
-          <Route path="/medical" element={<MedicalPage />} />
-          <Route path="/subscription" element={<SubscriptionPlans onSubscribe={() => {}} />} />
-          <Route path="/compliance" element={<ComplianceTracker />} />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/awareness" element={<Awareness />} />
+            <Route path="/hygiene-test" element={<HygieneTest />} />
+            <Route path="/todo-list" element={<TodoList />} />
+            <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/gps-tracking" element={<GpsTracking />} />
+            <Route path="/test" element={<TestPage />} />
+            <Route path="/medical" element={<MedicalPage />} />
+            <Route path="/subscription" element={<SubscriptionPlans onSubscribe={() => {}} />} />
+            <Route path="/compliance" element={<ComplianceTracker />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <VoiceAssistant />
+        </>
       ) : (
         <AuthForm onAuthSuccess={handleAuthSuccess} />
       )}

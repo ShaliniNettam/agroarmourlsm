@@ -214,6 +214,24 @@ class NotificationService {
     }
   }
 
+  // Create custom notification
+  async createCustomNotification(userId, data) {
+    try {
+      const notification = await Notification.create({
+        userId,
+        type: data.type || 'system',
+        title: data.title || 'Notification',
+        message: data.message || '',
+        priority: data.priority || 'low',
+        metadata: data.metadata || null
+      });
+      return notification;
+    } catch (error) {
+      console.error('Error creating custom notification:', error);
+      throw error;
+    }
+  }
+
   // Start notification scheduler
   startScheduler() {
     // Check for notifications every 5 minutes

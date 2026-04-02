@@ -11,17 +11,18 @@ const register = async (req, res) => {
       return res.status(400).json({ error: 'Phone, name and password are required' });
     }
 
-    // Check if user already exists
-    const existingUser = await User.findOne({ phone });
+    // Check if user already exists by phone or email
+    const existingUser = await User.findOne({ $or: [{ phone }, { email }] });
     if (existingUser) {
-      return res.status(400).json({ error: 'User already exists with this phone number' });
+      const field = existingUser.phone === phone ? 'phone number' : 'email';
+      return res.status(400).json({ error: `User already exists with this ${field}` });
     }
 
     // Create new user
     const user = new User({
       phone,
-      email,
-      pwdHash: password || '',
+      email: email || undefined,
+      pwdHash: password,
       name
     });
 
@@ -38,13 +39,21 @@ const register = async (req, res) => {
         phone: user.phone,
         email: user.email,
         name: user.name,
+        photo: user.photo,
         preferences: user.preferences
       }
     });
 
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ error: 'Registration failed' });
+    
+    // Handle specific MongoDB duplicate key error code 11000
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      return res.status(400).json({ error: `Already registered: ${field} in use.` });
+    }
+
+    res.status(500).json({ error: 'Registration failed: Internal Server Error' });
   }
 };
 
@@ -80,6 +89,7 @@ const login = async (req, res) => {
         phone: user.phone,
         email: user.email,
         name: user.name,
+        photo: user.photo,
         preferences: user.preferences
       }
     });
@@ -99,6 +109,7 @@ const getProfile = async (req, res) => {
         phone: req.user.phone,
         email: req.user.email,
         name: req.user.name,
+        photo: req.user.photo,
         preferences: req.user.preferences
       }
     });
@@ -131,6 +142,7 @@ const updatePreferences = async (req, res) => {
         phone: user.phone,
         email: user.email,
         name: user.name,
+        photo: user.photo,
         preferences: user.preferences
       }
     });
@@ -138,6 +150,48 @@ const updatePreferences = async (req, res) => {
   } catch (error) {
     console.error('Update preferences error:', error);
     res.status(500).json({ error: 'Failed to update preferences' });
+  }
+};
+
+// Update user profile (name, email, photo)
+const updateProfile = async (req, res) => {
+  try {
+    const { name, email, photo } = req.body;
+    
+    // Check if email belongs to another user
+    if (email) {
+      const existingEmail = await User.findOne({ email, _id: { $ne: req.user._id } });
+      if (existingEmail) {
+        return res.status(400).json({ error: 'Email already in use' });
+      }
+    }
+
+    const updateData = {};
+    if (name) updateData.name = name;
+    if (email) updateData.email = email;
+    if (photo) updateData.photo = photo;
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $set: updateData },
+      { new: true }
+    );
+
+    res.json({
+      message: 'Profile updated successfully',
+      user: {
+        id: user._id,
+        phone: user.phone,
+        email: user.email,
+        name: user.name,
+        photo: user.photo,
+        preferences: user.preferences
+      }
+    });
+
+  } catch (error) {
+    console.error('Update profile error:', error);
+    res.status(500).json({ error: 'Failed to update profile' });
   }
 };
 
@@ -170,6 +224,7 @@ module.exports = {
   register,
   login,
   getProfile,
+  updateProfile,
   updatePreferences,
   changePassword
 };

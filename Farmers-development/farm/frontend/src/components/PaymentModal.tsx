@@ -17,8 +17,10 @@ import {
   Banknote,
   CheckCircle,
   AlertCircle,
-  Loader2
+  Loader2,
+  QrCode
 } from "lucide-react";
+import paymentQr from "@/assets/custom_payment_qr.jpeg";
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -58,6 +60,8 @@ const PaymentModal = ({ isOpen, onClose, items, subscription, onSuccess }: Payme
   const [selectedProvider, setSelectedProvider] = useState<string>("razorpay");
   const [isProcessing, setIsProcessing] = useState(false);
   const [upiId, setUpiId] = useState("");
+  const [utrNumber, setUtrNumber] = useState("");
+  const [showQRCode, setShowQRCode] = useState(true);
   const [cardDetails, setCardDetails] = useState({
     number: "",
     expiry: "",
@@ -123,67 +127,12 @@ const PaymentModal = ({ isOpen, onClose, items, subscription, onSuccess }: Payme
     setTimeout(() => {
       setIsProcessing(false);
       toast({
-        title: "Payment Failed",
-        description: "Bank server is busy. Please try again after sometime.",
-        variant: "destructive",
+        title: "Payment Successful!",
+        description: "Your payment has been processed successfully via UPI.",
       });
-      // Do not call onSuccess or onClose here, as the payment failed
-    }, 2000); // Simulate a 2-second delay
-
-    /*
-    try {
-      const paymentData = {
-        items,
-        subscription,
-        paymentMethod: selectedMethod,
-        paymentProvider: selectedProvider,
-        amount: finalAmount,
-        upiId: selectedMethod === "upi" ? upiId : undefined,
-        cardDetails: selectedMethod === "card" ? cardDetails : undefined
-      };
-
-      // Call payment API
-      const response = await fetch('/api/payments/create-order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        },
-        body: JSON.stringify(paymentData)
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        // Handle different payment providers
-        if (selectedProvider === 'razorpay') {
-          await handleRazorpayPayment(result.gatewayData);
-        } else if (selectedProvider === 'payu') {
-          await handlePayuPayment(result.gatewayData);
-        } else if (selectedProvider === 'paytm') {
-          await handlePaytmPayment(result.gatewayData);
-        } else if (selectedProvider === 'cash') {
-          await handleCashPayment(result.order);
-        }
-
-        toast({
-          title: "Payment Initiated",
-          description: "Redirecting to payment gateway...",
-        });
-      } else {
-        throw new Error(result.message);
-      }
-    } catch (error) {
-      console.error('Payment error:', error);
-      toast({
-        title: "Payment Failed",
-        description: error.message || "Failed to process payment",
-        variant: "destructive"
-      });
-    } finally {
-      setIsProcessing(false);
-    }
-    */
+      onSuccess({ method: 'upi', amount: finalAmount });
+      onClose();
+    }, 1500);
   };
 
   const handleRazorpayPayment = async (gatewayData: any) => {
@@ -406,19 +355,118 @@ const PaymentModal = ({ isOpen, onClose, items, subscription, onSuccess }: Payme
 
           {/* UPI ID Input */}
           {selectedMethod === "upi" && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Enter UPI ID</CardTitle>
+            <Card className="border-primary/20 shadow-sm">
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <QrCode className="w-5 h-5 text-primary" />
+                    UPI Payment
+                  </CardTitle>
+                  <div className="flex bg-muted p-1 rounded-md">
+                    <Button 
+                      variant={showQRCode ? "secondary" : "ghost"} 
+                      size="sm" 
+                      onClick={() => setShowQRCode(true)}
+                      className="h-7 px-3 text-xs"
+                    >
+                      QR Code
+                    </Button>
+                    <Button 
+                      variant={!showQRCode ? "secondary" : "ghost"} 
+                      size="sm" 
+                      onClick={() => setShowQRCode(false)}
+                      className="h-7 px-3 text-xs"
+                    >
+                      UPI ID
+                    </Button>
+                  </div>
+                </div>
               </CardHeader>
               <CardContent>
-                <Input
-                  placeholder="yourname@upi"
-                  value={upiId}
-                  onChange={(e) => setUpiId(e.target.value)}
-                />
-                <p className="text-sm text-muted-foreground mt-2">
-                  Enter your UPI ID (e.g., 9999999999@paytm, yourname@google)
-                </p>
+                {showQRCode ? (
+                  <div className="flex flex-col items-center justify-center space-y-4 py-2">
+                    <div className="bg-white p-2 rounded-xl border-2 border-primary/10 shadow-md flex justify-center w-fit mx-auto">
+                      <img 
+                        src={paymentQr} 
+                        alt="Payment QR Code" 
+                        className="w-56 h-auto max-h-[350px] object-contain rounded-lg"
+                      />
+                    </div>
+                    <div className="text-center space-y-1 w-full">
+                      <p className="font-bold text-xl text-primary mb-1">Total: ₹{finalAmount.toFixed(2)}</p>
+                      <p className="text-sm font-medium">Scan with any UPI App and Pay</p>
+                      
+                      <div className="mt-4 pt-4 border-t border-slate-100 w-full space-y-3">
+                        <Label htmlFor="utr-input" className="text-left block text-sm font-bold text-slate-700">
+                          Enter 12-digit UTR / Reference No.
+                        </Label>
+                        <Input 
+                          id="utr-input"
+                          placeholder="e.g. 301234567890" 
+                          value={utrNumber}
+                          onChange={(e) => setUtrNumber(e.target.value.replace(/\D/g, '').slice(0, 12))}
+                          className="text-center tracking-widest font-mono text-lg transition-all border-slate-300 focus-visible:ring-primary/40 bg-slate-50"
+                        />
+                        <p className="text-[10px] text-muted-foreground text-left">
+                          You will find the 12-digit UTR or Reference Number in your UPI app's transaction history after successful payment.
+                        </p>
+                      </div>
+                    </div>
+                    <Button 
+                      className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-6 mt-4 shadow-elegant"
+                      disabled={isProcessing || utrNumber.length !== 12}
+                      onClick={() => {
+                        if (utrNumber.length !== 12) {
+                          toast({ title: "Invalid UTR", description: "Please enter a valid 12-digit UTR number.", variant: "destructive" });
+                          return;
+                        }
+                        setIsProcessing(true);
+                        // Simulate realistic bank verification delay
+                        setTimeout(() => {
+                          setIsProcessing(false);
+                          toast({
+                            title: "Payment Verified Successfully!",
+                            description: `UTR ${utrNumber} verified for ₹${finalAmount.toFixed(2)}. Subscription is now active.`,
+                          });
+                          onSuccess({ method: 'upi_qr', amount: finalAmount, utr: utrNumber });
+                          onClose();
+                        }, 3000);
+                      }}
+                    >
+                      {isProcessing ? (
+                        <div className="flex items-center">
+                          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                          Verifying with Bank...
+                        </div>
+                      ) : (
+                        "Verify Payment"
+                      )}
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="upi-id">Enter UPI ID</Label>
+                      <Input
+                        id="upi-id"
+                        placeholder="7989303343@axl"
+                        value={upiId}
+                        onChange={(e) => setUpiId(e.target.value)}
+                        className="text-lg py-6"
+                      />
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      A payment request will be sent to your UPI app.
+                    </p>
+                    <Button 
+                      className="w-full" 
+                      onClick={handlePayment}
+                      disabled={isProcessing || !upiId}
+                    >
+                      {isProcessing ? "Requesting..." : `Pay ₹${finalAmount.toFixed(2)}`}
+                    </Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
           )}

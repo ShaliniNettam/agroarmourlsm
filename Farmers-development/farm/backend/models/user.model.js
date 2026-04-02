@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  photo: {
+    type: String
+  },
   preferences: {
     voiceEnabled: {
       type: Boolean,
