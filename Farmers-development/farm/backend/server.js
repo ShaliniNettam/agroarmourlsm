@@ -50,7 +50,18 @@ if (!process.env.JWT_SECRET) {
 
 // Middleware
 app.use(cors({
-  origin: ["http://16.176.157.113", "http://localhost:8083", "http://localhost:8084", "http://localhost:8085", "http://localhost:8086", "http://127.0.0.1:8083", "http://127.0.0.1:8084", "http://127.0.0.1:8085", "http://127.0.0.1:8086"],
+  origin: [
+    "https://agroarmourlsm-frontend.onrender.com",
+    "http://16.176.157.113", 
+    "http://localhost:8083", 
+    "http://localhost:8084", 
+    "http://localhost:8085", 
+    "http://localhost:8086", 
+    "http://127.0.0.1:8083", 
+    "http://127.0.0.1:8084", 
+    "http://127.0.0.1:8085", 
+    "http://127.0.0.1:8086"
+  ],
   credentials: true,
 }));
 app.use(express.json({ limit: '50mb' }));

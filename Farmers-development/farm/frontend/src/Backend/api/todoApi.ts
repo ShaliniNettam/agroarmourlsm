@@ -13,7 +13,7 @@ interface TodoResponse {
 }
 
 // API for todo operations using HTTP requests to backend
-const API_BASE = '/api'; // Use proxy for development
+const API_BASE = import.meta.env.VITE_API_URL || '/api'; // Use VITE_API_URL for production, proxy for development
 // Get auth token from localStorage
 const getAuthToken = () => {
   return localStorage.getItem('authToken');
