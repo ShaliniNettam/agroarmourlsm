@@ -5,7 +5,7 @@ import { Label } from './ui/label';
 import { authApi } from '../Backend/api/todoApi';
 import LanguageSelector from './LanguageSelector';
 import { useLanguage } from '@/contexts/LanguageContext';
-import signupBg from '@/assets/auth-bg-light.png';
+import signupBg from '@/assets/auth-bg-sunset.png';
 import { Eye, EyeOff, Phone, Mail, User, Lock, ArrowRight, Leaf, ShieldAlert } from 'lucide-react';
 
 interface AuthFormProps {
