@@ -118,7 +118,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
       {/* ── Top bar (logo + language) ── */}
       <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-8 py-5 z-20">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-900/40">
+          <div className="w-9 h-9 rounded-xl bg-emerald-500 hidden md:flex items-center justify-center shadow-lg shadow-emerald-900/40">
             <Leaf className="w-5 h-5 text-white" />
           </div>
           <span className="text-white text-xl font-black tracking-tight drop-shadow">AgroArmor</span>

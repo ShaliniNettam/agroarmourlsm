@@ -134,19 +134,19 @@ const Navbar = () => {
               </SheetContent>
             </Sheet>
 
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="p-1.5 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+            <Link to="/" className="flex items-center gap-1.5 group shrink-0">
+              <div className="p-1.5 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors hidden md:flex">
                 <img 
                   src="/Farming Logo.ico" 
                   alt="AgroArmor Logo" 
                   className="w-7 h-7" 
                 />
               </div>
-              <span className="text-2xl font-bold tracking-tight text-primary">AgroArmor</span>
+              <span className="text-lg sm:text-2xl font-bold tracking-tight text-primary">AgroArmor</span>
             </Link>
           </div>
           
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3">
             <Link to="/subscription">
               <Button size="sm" className="hidden sm:flex gap-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 shadow-sm border-0">
                 <Crown className="w-4 h-4" />
@@ -292,9 +292,7 @@ const Navbar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <div className="hidden sm:block">
-              <LanguageSelector />
-            </div>
+            <LanguageSelector />
           </div>
         </div>
       </div>

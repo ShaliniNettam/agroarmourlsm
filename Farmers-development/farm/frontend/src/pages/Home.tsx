@@ -12,8 +12,8 @@ import {
   Scale,
   MousePointerClick
 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import RoamingChick from "@/components/RoamingChick";
 // import heroBg from "@/assets/home-hero.png"; // Removed background image since user requested plain background
 
 const Home = () => {
@@ -51,8 +51,9 @@ const Home = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-white">
+    <div className="flex flex-col min-h-screen bg-white relative">
       <Navbar />
+      <RoamingChick />
       
       {/* Hero Section */}
       <section className="relative flex-grow flex items-center justify-center pt-10 pb-10 overflow-hidden min-h-[calc(100vh-80px)]">
