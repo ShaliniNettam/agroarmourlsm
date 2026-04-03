@@ -1,0 +1,225 @@
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\App.tsx[24m[0m
+[0m  [2m30:36[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m67:40[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\Backend\api\medicalApi.ts[24m[0m
+[0m   [2m21:36[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m90:48[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m136:36[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m194:38[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m249:46[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m298:53[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m370:59[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\Backend\api\todoApi.ts[24m[0m
+[0m  [2m158:21[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m184:21[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m232:47[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\AnimalHealthcareGps.tsx[24m[0m
+[0m  [2m270:6[22m  [33mwarning[39m  React Hook useEffect has missing dependencies: 'demoAnimals' and 'demoVeterinarians'. Either include them or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\AuthForm.tsx[24m[0m
+[0m  [2m59:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m97:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\CheckoutModal.tsx[24m[0m
+[0m   [2m17:28[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m109:46[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\DiseaseDetection.tsx[24m[0m
+[0m   [2m23:48[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m107:21[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m184:94[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\DoctorActions.tsx[24m[0m
+[0m  [2m24:21[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\GoogleMapsGpsTracking.tsx[24m[0m
+[0m  [2m116:6[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'loadNearbyMedical'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m  [2m255:16[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m260:20[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m261:51[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m262:25[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m384:64[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\GpsTracking.tsx[24m[0m
+[0m   [2m42:38[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                                [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m52:6[22m   [33mwarning[39m  React Hook useEffect has missing dependencies: 'loadCurrentLocation' and 'watchId'. Either include them or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m  [2m119:19[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                                [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m162:19[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                                [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m193:19[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                                [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m214:19[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                                [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\LanguageSelector.tsx[24m[0m
+[0m  [2m14:28[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\MedicalDashboard.tsx[24m[0m
+[0m  [2m140:6[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m  [2m148:11[22m  [31merror[39m    Unexpected lexical declaration in case block                                                                 [2mno-case-declarations[22m[0m
+[0m  [2m152:11[22m  [31merror[39m    Unexpected lexical declaration in case block                                                                 [2mno-case-declarations[22m[0m
+[0m  [2m156:11[22m  [31merror[39m    Unexpected lexical declaration in case block                                                                 [2mno-case-declarations[22m[0m
+[0m  [2m160:11[22m  [31merror[39m    Unexpected lexical declaration in case block                                                                 [2mno-case-declarations[22m[0m
+[0m  [2m178:49[22m  [31merror[39m    Unexpected any. Specify a different type                                                                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m237:49[22m  [31merror[39m    Unexpected any. Specify a different type                                                                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m251:51[22m  [31merror[39m    Unexpected any. Specify a different type                                                                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m265:59[22m  [31merror[39m    Unexpected any. Specify a different type                                                                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\Navbar.tsx[24m[0m
+[0m  [2m45:50[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m73:76[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\PaymentModal.tsx[24m[0m
+[0m   [2m30:28[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m141:53[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m153:35[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m166:34[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m172:49[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m192:50[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m212:43[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m221:42[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\SimpleGpsTracking.tsx[24m[0m
+[0m   [2m23:58[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m26:54[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m144:6[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'demoNearbyDoctors'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m  [2m232:16[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m237:20[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m238:51[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m239:25[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m264:34[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m271:31[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m275:32[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m279:36[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\SubscriptionPlans.tsx[24m[0m
+[0m  [2m109:46[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\VeterinaryGpsTracking.tsx[24m[0m
+[0m   [2m80:58[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m267:6[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'demoVeterinarians'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\VeterinaryGpsTrackingClean.tsx[24m[0m
+[0m   [2m77:58[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m263:6[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'demoVeterinarians'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\VeterinaryGpsTrackingComplete.tsx[24m[0m
+[0m   [2m29:52[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m305:6[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'filterVeterinarians'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m  [2m396:32[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m402:34[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m406:35[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m410:33[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\VeterinaryGpsTrackingProfessional.tsx[24m[0m
+[0m   [2m30:52[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m193:6[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'demoVeterinarians'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m  [2m261:33[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m272:32[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m278:34[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m282:35[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m286:33[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\VeterinaryGpsTrackingSimple.tsx[24m[0m
+[0m  [2m213:33[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m224:32[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m230:34[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m234:35[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m238:33[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\VeterinaryGpsTrackingWorking.tsx[24m[0m
+[0m   [2m30:52[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m159:6[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'demoVeterinarians'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m  [2m227:33[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m238:32[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m244:34[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m248:35[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m252:33[22m  [31merror[39m    Unexpected any. Specify a different type                                                                              [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\ui\badge.tsx[24m[0m
+[0m  [2m29:17[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\ui\button.tsx[24m[0m
+[0m  [2m47:18[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\ui\command.tsx[24m[0m
+[0m  [2m24:11[22m  [31merror[39m  An interface declaring no members is equivalent to its supertype  [2m@typescript-eslint/no-empty-object-type[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\ui\form.tsx[24m[0m
+[0m  [2m129:10[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\ui\navigation-menu.tsx[24m[0m
+[0m  [2m111:3[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\ui\sidebar.tsx[24m[0m
+[0m  [2m636:3[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\ui\sonner.tsx[24m[0m
+[0m  [2m27:19[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\ui\textarea.tsx[24m[0m
+[0m  [2m5:18[22m  [31merror[39m  An interface declaring no members is equivalent to its supertype  [2m@typescript-eslint/no-empty-object-type[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\components\ui\toggle.tsx[24m[0m
+[0m  [2m37:18[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\contexts\CartContext.tsx[24m[0m
+[0m  [2m93:14[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\contexts\LanguageContext.tsx[24m[0m
+[0m  [2m28:38[22m  [31merror[39m    Unexpected any. Specify a different type                                                                                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m85:14[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\lib\amplitude.ts[24m[0m
+[0m  [2m16:89[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m22:87[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\lib\mixpanel.ts[24m[0m
+[0m  [2m20:65[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m25:67[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\pages\Community.tsx[24m[0m
+[0m  [2m48:50[22m  [31merror[39m    Unexpected any. Specify a different type                                                                       [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m59:6[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'fetchPosts'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\pages\ComplianceTracker.tsx[24m[0m
+[0m   [2m47:11[22m  [31merror[39m  An empty interface declaration allows any non-nullish value, including literals like `0` and `""`.[0m
+[0m- If that's what you want, disable this lint rule with an inline comment or configure the 'allowInterfaces' rule option.[0m
+[0m- If you want a type meaning "any object", you probably want `object` instead.[0m
+[0m- If you want a type meaning "any value", you probably want `unknown` instead  [2m@typescript-eslint/no-empty-object-type[22m[0m
+[0m   [2m49:28[22m  [31merror[39m  Unexpected empty object pattern                                                                                                                                                                                                                                                                                                                                                           [2mno-empty-pattern[22m[0m
+[0m  [2m533:95[22m  [31merror[39m  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m549:95[22m  [31merror[39m  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m595:96[22m  [31merror[39m  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\pages\Marketplace.tsx[24m[0m
+[0m   [2m75:40[22m   [31merror[39m    Unexpected any. Specify a different type                                                                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m105:6[22m    [33mwarning[39m  React Hook useMemo has a missing dependency: 'defaultSeller'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m  [2m476:103[22m  [31merror[39m    Unexpected any. Specify a different type                                                                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m476:111[22m  [31merror[39m    Unexpected any. Specify a different type                                                                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m486:49[22m   [31merror[39m    Unexpected any. Specify a different type                                                                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\pages\Profile.tsx[24m[0m
+[0m  [2m12:50[22m  [31merror[39m    Unexpected any. Specify a different type                                                                          [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m25:6[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'fetchUserData'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m  [2m68:21[22m  [31merror[39m    Unexpected any. Specify a different type                                                                          [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\pages\TodoList.tsx[24m[0m
+[0m   [2m31:54[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m44:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m91:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m108:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m117:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\pages\VaccineMarketplace.tsx[24m[0m
+[0m  [2m583:6[22m  [33mwarning[39m  React Hook useMemo has a missing dependency: 't'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\src\pages\VaccineMarketplaceFixed.tsx[24m[0m
+[0m  [2m583:6[22m  [33mwarning[39m  React Hook useMemo has a missing dependency: 't'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mC:\Users\shali\Desktop\farmers-dev-new\farmers-dev-new\Farmers-development\farm\frontend\tailwind.config.ts[24m[0m
+[0m  [2m90:13[22m  [31merror[39m  A `require()` style import is forbidden  [2m@typescript-eslint/no-require-imports[22m[0m
+[0m[0m
+[0m[31m[1m✖ 133 problems (109 errors, 24 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[0m

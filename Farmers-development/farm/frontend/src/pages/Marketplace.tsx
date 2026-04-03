@@ -13,6 +13,15 @@ import CheckoutModal from "@/components/CheckoutModal";
 import poultryFeedImg from "@/assets/poultry-farm.jpg";
 import vaccineImg from "@/assets/newcastle-disease.jpg";
 import cattleFeedImg from "@/assets/cattle-health.jpg";
+import fmdVaccineImg from "@/assets/fmd_vaccine.png";
+import lsdVaccineImg from "@/assets/lsd_vaccine.png";
+import bvdVaccineImg from "@/assets/bvd_vaccine.png";
+import ranikhetVaccineImg from "@/assets/ranikhet_vaccine.png";
+import layerMashImg from "@/assets/layer_mash.jpg";
+import crumblesImg from "@/assets/crumbles.jpg";
+import milletComboImg from "@/assets/millet_combo.jpg";
+import pelletsImg from "@/assets/pellets.jpg";
+import wheatGrassImg from "@/assets/vibex_wheat_seeds.png"; // fallback for sprouting seeds
 import { useCart } from "@/contexts/CartContext";
 import { notificationApi } from "@/Backend/api/todoApi";
 import {
@@ -87,18 +96,22 @@ const Marketplace = () => {
 
   const marketplaceItems: MarketplaceItem[] = useMemo(() => [
     // Vaccines
-    { id: "v1", name: t("marketplaceItem2Name"), description: t("marketplaceItem2Description"), price: 850, category: "vaccines", seller: defaultSeller, image: "https://images.unsplash.com/photo-1618015359908-7bfdd389c9c1?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "FMD-PV-100", weight: "100 ml", origin: "India", features: [t("marketplaceItem2Feature1"), t("marketplaceItem2Feature2"), t("marketplaceItem2Feature3"), t("marketplaceItem2Feature4")], benefits: [t("marketplaceItem2Benefit1"), t("marketplaceItem2Benefit2"), t("marketplaceItem2Benefit3"), t("marketplaceItem2Benefit4")] },
-    { id: "v2", name: t("vaccineItem2Name"), description: t("vaccineItem2Desc"), price: 650, category: "vaccines", seller: defaultSeller, image: "https://images.unsplash.com/photo-1584362917165-526a968579e8?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "LSD-50", weight: "50 doses", origin: "India", features: [t("vaccineItem2F1"), t("vaccineItem2F2"), t("vaccineItem2F3"), t("vaccineItem2F4")], benefits: [t("vaccineItem2B1"), t("vaccineItem2B2"), t("vaccineItem2B3"), t("vaccineItem2B4")] },
-    { id: "v3", name: t("vaccineItem3Name"), description: t("vaccineItem3Desc"), price: 720, category: "vaccines", seller: defaultSeller, image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "BVD-100", weight: "100 ml", origin: "India", features: [t("vaccineItem3F1"), t("vaccineItem3F2"), t("vaccineItem3F3"), t("vaccineItem3F4")], benefits: [t("vaccineItem3B1"), t("vaccineItem3B2"), t("vaccineItem3B3"), t("vaccineItem3B4")] },
-    { id: "v5", name: t("vaccineItem5Name"), description: t("vaccineItem5Desc"), price: 450, category: "vaccines", seller: defaultSeller, image: "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "ND-LR-200", weight: "200 doses", origin: "India", features: [t("vaccineItem5F1"), t("vaccineItem5F2"), t("vaccineItem5F3"), t("vaccineItem5F4")], benefits: [t("vaccineItem5B1"), t("vaccineItem5B2"), t("vaccineItem5B3"), t("vaccineItem5B4")] },
+    { id: "v1", name: t("marketplaceItem2Name"), description: t("marketplaceItem2Description"), price: 850, category: "vaccines", seller: defaultSeller, image: fmdVaccineImg, inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "FMD-PV-100", weight: "100 ml", origin: "India", features: [t("marketplaceItem2Feature1"), t("marketplaceItem2Feature2"), t("marketplaceItem2Feature3"), t("marketplaceItem2Feature4")], benefits: [t("marketplaceItem2Benefit1"), t("marketplaceItem2Benefit2"), t("marketplaceItem2Benefit3"), t("marketplaceItem2Benefit4")] },
+    { id: "v2", name: t("vaccineItem2Name"), description: t("vaccineItem2Desc"), price: 650, category: "vaccines", seller: defaultSeller, image: lsdVaccineImg, inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "LSD-50", weight: "50 doses", origin: "India", features: [t("vaccineItem2F1"), t("vaccineItem2F2"), t("vaccineItem2F3"), t("vaccineItem2F4")], benefits: [t("vaccineItem2B1"), t("vaccineItem2B2"), t("vaccineItem2B3"), t("vaccineItem2B4")] },
+    { id: "v3", name: t("vaccineItem3Name"), description: t("vaccineItem3Desc"), price: 720, category: "vaccines", seller: defaultSeller, image: bvdVaccineImg, inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "BVD-100", weight: "100 ml", origin: "India", features: [t("vaccineItem3F1"), t("vaccineItem3F2"), t("vaccineItem3F3"), t("vaccineItem3F4")], benefits: [t("vaccineItem3B1"), t("vaccineItem3B2"), t("vaccineItem3B3"), t("vaccineItem3B4")] },
+    { id: "v5", name: t("vaccineItem5Name"), description: t("vaccineItem5Desc"), price: 450, category: "vaccines", seller: defaultSeller, image: ranikhetVaccineImg, inStock: true, deliveryAvailable: true, categoryLabel: t("vaccinesLabel"), sku: "ND-LR-200", weight: "200 doses", origin: "India", features: [t("vaccineItem5F1"), t("vaccineItem5F2"), t("vaccineItem5F3"), t("vaccineItem5F4")], benefits: [t("vaccineItem5B1"), t("vaccineItem5B2"), t("vaccineItem5B3"), t("vaccineItem5B4")] },
     
     // Feed & Fodder
-    { id: "f3", name: t("vaccineItem11Name"), description: t("vaccineItem11Desc"), price: 950, category: "feed", seller: defaultSeller, image: "https://images.unsplash.com/photo-1586521995568-39abaa0c2311?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "CF-50", weight: "50 kg", origin: "India", features: [t("vaccineItem11F1"), t("vaccineItem11F2"), t("vaccineItem11F3"), t("vaccineItem11F4")], benefits: [t("vaccineItem11B1"), t("vaccineItem11B2"), t("vaccineItem11B3"), t("vaccineItem11B4")], infoUrl: "https://www.google.com/search?q=cattle+feed" },
-    { id: "f4", name: t("vaccineItem12Name"), description: t("vaccineItem12Desc"), price: 750, category: "feed", seller: defaultSeller, image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "MASH-50", weight: "50 kg", origin: "India", features: [t("vaccineItem12F1"), t("vaccineItem12F2"), t("vaccineItem12F3"), t("vaccineItem12F4")], benefits: [t("vaccineItem12B1"), t("vaccineItem12B2"), t("vaccineItem12B3"), t("vaccineItem12B4")], infoUrl: "https://www.google.com/search?q=mash+feed" },
+    { id: "f3", name: t("vaccineItem11Name"), description: t("vaccineItem11Desc"), price: 950, category: "feed", seller: defaultSeller, image: cattleFeedImg, inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "CF-50", weight: "50 kg", origin: "India", features: [t("vaccineItem11F1"), t("vaccineItem11F2"), t("vaccineItem11F3"), t("vaccineItem11F4")], benefits: [t("vaccineItem11B1"), t("vaccineItem11B2"), t("vaccineItem11B3"), t("vaccineItem11B4")], infoUrl: "https://www.google.com/search?q=cattle+feed" },
+    { id: "f4", name: t("vaccineItem12Name"), description: t("vaccineItem12Desc"), price: 750, category: "feed", seller: defaultSeller, image: crumblesImg, inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "MASH-50", weight: "50 kg", origin: "India", features: [t("vaccineItem12F1"), t("vaccineItem12F2"), t("vaccineItem12F3"), t("vaccineItem12F4")], benefits: [t("vaccineItem12B1"), t("vaccineItem12B2"), t("vaccineItem12B3"), t("vaccineItem12B4")], infoUrl: "https://www.google.com/search?q=mash+feed" },
+    { id: "f5", name: "Scratch & Peck Layer Mash", description: "Organic naturally complete whole-grain layer feed, 16% protein.", price: 1200, category: "feed", seller: defaultSeller, image: layerMashImg, inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "SP-LM-10", weight: "10 lb", origin: "USA", features: ["16% Protein", "Whole Grain", "Organic"], benefits: ["Healthy Hens", "Better Eggs", "Natural Diet"], infoUrl: "" },
+    { id: "f6", name: "Organic Wheat Grass Seeds", description: "Healthy, nutritious, delicious certified organic sprouting seeds.", price: 450, category: "feed", seller: defaultSeller, image: wheatGrassImg, inStock: true, deliveryAvailable: true, categoryLabel: t("animalFeed"), sku: "SP-WG-5", weight: "5 lb", origin: "USA", features: ["Certified Organic", "Fast Sprouting", "High Nutrition"], benefits: ["Fresh Greens", "Natural Minerals", "Indoor/Outdoor Use"], infoUrl: "" },
+    
+    // Grains & Combos
+    { id: "g1", name: "Organic Millet Combo", description: "Barnyard, Browntop, Kodo, Foxtail, and Little Millet combo pack.", price: 850, category: "feed", seller: defaultSeller, image: milletComboImg, inStock: true, deliveryAvailable: true, categoryLabel: "Grains", sku: "MILLET-5", weight: "5 kg", origin: "India", features: ["100% Organic", "Unpolished", "Gluten Free"], benefits: ["High Fiber", "Healthy Diet", "Nutrient Rich"], infoUrl: "" },
     
     // Equipment & Fertilizers
-    { id: "e1", name: "Heavy Duty Farm Tractor", description: "Modern tractor with 50HP engine for plowing and tilling.", price: 540000, category: "equipment", seller: defaultSeller, image: "https://images.unsplash.com/photo-1592878904946-b3cd8ae52583?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: "Equipment", sku: "TRC-50", weight: "2200 kg", origin: "India", features: ["50 HP", "Power Steering", "Includes Attachments"], benefits: ["High Efficiency", "Saves Fuel", "Long Lifespan"], infoUrl: "https://www.google.com/search?q=farm+tractor" },
-    { id: "e2", name: "Organic Nitrogen Fertilizer", description: "100% organic fertilizer for rapid crop growth.", price: 450, category: "fertilizer", seller: defaultSeller, image: "https://images.unsplash.com/photo-1628352081506-83c43123ed6d?w=500&auto=format&fit=crop", inStock: true, deliveryAvailable: true, categoryLabel: "Fertilizer", sku: "ONF-25", weight: "25 kg", origin: "India", features: ["100% Organic", "Fast Release", "Soil Friendly"], benefits: ["Increases Yield", "Improves Soil Health", "Eco-friendly"], infoUrl: "https://www.google.com/search?q=organic+fertilizer" },
+    { id: "e3", name: "Elysian Wood Pellets", description: "Barbeque Biomass Pellets Fire Starter for Cooking, Wood Stove.", price: 279, category: "equipment", seller: defaultSeller, image: pelletsImg, inStock: true, deliveryAvailable: true, categoryLabel: "Fuel", sku: "ELY-WP-1", weight: "1 kg", origin: "India", features: ["100% Natural", "Low Ash", "High Heat"], benefits: ["Clean Burning", "Eco-friendly", "Safe"], infoUrl: "" },
   ], [t]);
 
   const filteredItems = marketplaceItems.filter(item => {
@@ -207,7 +220,17 @@ const Marketplace = () => {
             <p className="text-emerald-50 text-lg mb-6 max-w-xl">
               {t('marketplacePromoDesc')}
             </p>
-            <Button size="lg" className="bg-white text-emerald-700 hover:bg-emerald-50 font-bold border-none shadow-lg">
+            <Button 
+              size="lg" 
+              className="bg-white text-emerald-700 hover:bg-emerald-50 font-bold border-none shadow-lg transition-transform hover:scale-105 active:scale-95"
+              onClick={() => {
+                toast({
+                  title: '🎉 Offer Activated!',
+                  description: 'Your 30% discount has been applied. Valid on all farm essentials below.',
+                });
+                document.getElementById('products-grid')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               {t('marketplacePromoButton')} <Sparkles className="ml-2 w-4 h-4" />
             </Button>
           </div>
@@ -334,7 +357,7 @@ const Marketplace = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="flex items-center gap-2 mb-6">
+        <div id="products-grid" className="flex items-center gap-2 mb-6 mt-8">
            <Package className="w-5 h-5 text-slate-400" />
            <h2 className="text-2xl font-bold text-slate-900">{t('allProducts')}</h2>
         </div>
@@ -375,23 +398,6 @@ const Marketplace = () => {
                     <Star className="w-3 h-3 mr-1 fill-amber-500" />
                     {item.seller.rating} <span className="text-slate-400 text-xs ml-1">(120)</span>
                   </div>
-                  <div className="text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md flex items-center">
-                    <Truck className="w-3 h-3 mr-1" /> {t('deliveryTomorrow') === 'deliveryTomorrow' ? 'Next Day Delivery' : t('deliveryTomorrow')}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 text-xs font-semibold text-rose-500 bg-rose-50 p-2 rounded-md">
-                   {item.inStock ? (
-                      <>
-                        <Check className="w-3 h-3 text-emerald-500" /> 
-                        <span className="text-emerald-600">In Stock - Ready to Ship</span>
-                      </>
-                   ) : (
-                      <>
-                        <Clock className="w-3 h-3" /> 
-                        {t('stockLeft', { count: 5 }) === 'stockLeft' ? 'Low Stock: Only 5 remaining!' : t('stockLeft', { count: 5 })}
-                      </>
-                   )}
                 </div>
 
                 <div className="flex items-center gap-2 text-sm text-muted-foreground pb-2 border-b border-slate-100">
@@ -416,7 +422,7 @@ const Marketplace = () => {
                         onClick={() => handleAddToCart(item)}
                         disabled={!item.inStock}
                       >
-                         <ShoppingCart className="w-4 h-4 mr-1" /> Add
+                         <ShoppingCart className="w-4 h-4 mr-1" /> {t('addBtn') === 'addBtn' ? 'Add' : t('addBtn')}
                       </Button>
                       <Button
                         size="sm"
@@ -424,7 +430,7 @@ const Marketplace = () => {
                         onClick={() => handleBuyNow(item)}
                         disabled={!item.inStock}
                       >
-                        Buy Now
+                        {t('buyNow') === 'buyNow' ? 'Buy Now' : t('buyNow')}
                       </Button>
                     </div>
                   </div>
@@ -516,7 +522,7 @@ const Marketplace = () => {
                     disabled={!selectedItem.inStock}
                     className="flex-1 bg-emerald-600 hover:bg-emerald-700 h-14 text-lg font-bold shadow-lg shadow-emerald-600/20"
                   >
-                    Buy Now Safely
+                    {t('buyNow') === 'buyNow' ? 'Buy Now' : t('buyNow')}
                   </Button>
                   <Button 
                     onClick={() => {
@@ -527,7 +533,7 @@ const Marketplace = () => {
                     disabled={!selectedItem.inStock}
                     className="flex-1 h-14 border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 text-lg font-bold"
                   >
-                    <ShoppingCart className="mr-2 w-5 h-5" /> Add to Cart
+                    <ShoppingCart className="mr-2 w-5 h-5" /> {t('addToCart') === 'addToCart' ? 'Add to Cart' : t('addToCart')}
                   </Button>
                 </div>
               </div>
@@ -550,6 +556,11 @@ const Marketplace = () => {
           quantity: item.quantity || 1
         }))}
         onSuccess={(paymentData) => {
+          // Save mock order
+          const itemsBought = buyNowItem ? [{ ...buyNowItem, quantity: 1, date: new Date().toLocaleDateString() }] : cart.map(item => ({ ...item, quantity: item.quantity || 1, date: new Date().toLocaleDateString() }));
+          const existingOrders = JSON.parse(localStorage.getItem('user_orders') || '[]');
+          localStorage.setItem('user_orders', JSON.stringify([...itemsBought, ...existingOrders]));
+
           toast({
             title: t('orderPlaced') || "Order Placed Successfully!",
             description: t('orderPlacedDescription') || "Your order has been confirmed and will be delivered soon.",

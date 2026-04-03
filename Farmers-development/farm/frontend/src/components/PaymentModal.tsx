@@ -97,13 +97,6 @@ const PaymentModal = ({ isOpen, onClose, items, subscription, onSuccess }: Payme
       icon: <Wallet className="w-5 h-5" />,
       description: "Paytm, PhonePe, Google Pay",
       providers: ["paytm", "phonepe", "google_pay"]
-    },
-    {
-      id: "cash",
-      name: "Cash Payment",
-      icon: <Banknote className="w-5 h-5" />,
-      description: "Pay on delivery or visit office",
-      providers: ["cash"]
     }
   ];
 
@@ -112,8 +105,7 @@ const PaymentModal = ({ isOpen, onClose, items, subscription, onSuccess }: Payme
     payu: { name: "PayU", logo: "💳" },
     paytm: { name: "Paytm", logo: "📱" },
     phonepe: { name: "PhonePe", logo: "📲" },
-    google_pay: { name: "Google Pay", logo: "G" },
-    cash: { name: "Cash Payment", logo: "💰" }
+    google_pay: { name: "Google Pay", logo: "G" }
   };
 
   const totalAmount = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -204,15 +196,6 @@ const PaymentModal = ({ isOpen, onClose, items, subscription, onSuccess }: Payme
     document.body.appendChild(form);
     form.submit();
     document.body.removeChild(form);
-  };
-
-  const handleCashPayment = async (order: any) => {
-    toast({
-      title: "Cash Payment Instructions",
-      description: "Please visit our office or contact us for cash payment. Order ID: " + order.orderId,
-    });
-    onSuccess(order);
-    onClose();
   };
 
   const verifyPayment = async (response: any) => {

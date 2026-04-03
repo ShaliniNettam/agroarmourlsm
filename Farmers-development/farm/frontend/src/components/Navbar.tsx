@@ -177,7 +177,7 @@ const Navbar = () => {
                 <SheetHeader className="p-5 border-b bg-slate-50">
                   <SheetTitle className="flex items-center gap-2 text-lg">
                     <ShoppingCart className="w-5 h-5 text-emerald-600" />
-                    My Cart
+                    {t('myCart') === 'myCart' ? 'My Cart' : t('myCart')}
                     {cartItemCount > 0 && (
                       <Badge className="bg-emerald-600 text-white ml-1">{cartItemCount}</Badge>
                     )}
@@ -191,11 +191,11 @@ const Navbar = () => {
                         <PackageOpen className="w-10 h-10 text-slate-400" />
                       </div>
                       <div>
-                        <p className="font-semibold text-slate-600 text-lg">Your cart is empty</p>
-                        <p className="text-sm text-slate-400 mt-1">Add vaccines & supplies from the Marketplace</p>
+                        <p className="font-semibold text-slate-600 text-lg">{t('emptyCart') === 'emptyCart' ? 'Your cart is empty' : t('emptyCart')}</p>
+                        <p className="text-sm text-slate-400 mt-1">{t('addSuppliesDesc') === 'addSuppliesDesc' ? 'Add vaccines & supplies from the Marketplace' : t('addSuppliesDesc')}</p>
                       </div>
                       <Button size="sm" onClick={() => { setIsCartOpen(false); navigate('/marketplace'); }} className="bg-emerald-600 hover:bg-emerald-700">
-                        <Store className="w-4 h-4 mr-2" /> Go to Marketplace
+                        <Store className="w-4 h-4 mr-2" /> {t('goToMarketplace') === 'goToMarketplace' ? 'Go to Marketplace' : t('goToMarketplace')}
                       </Button>
                     </div>
                   ) : (
@@ -226,7 +226,7 @@ const Navbar = () => {
                 {cart.length > 0 && (
                   <div className="p-4 border-t bg-slate-50 space-y-3">
                     <div className="flex items-center justify-between text-base font-bold">
-                      <span className="text-slate-600">Total ({cartItemCount} items)</span>
+                      <span className="text-slate-600">{t('totalItems', { count: cartItemCount }) === 'totalItems' ? `Total (${cartItemCount} items)` : `${t('total')} (${cartItemCount} ${t('items')})`}</span>
                       <span className="text-2xl text-emerald-600">₹{cartTotal}</span>
                     </div>
                     <Button
@@ -236,10 +236,10 @@ const Navbar = () => {
                         setIsCheckoutOpen(true);
                       }}
                     >
-                      Proceed to Checkout
+                      {t('proceedToCheckout') === 'proceedToCheckout' ? 'Proceed to Checkout' : t('proceedToCheckout')}
                     </Button>
                     <Button variant="ghost" size="sm" className="w-full text-red-500 hover:text-red-600 hover:bg-red-50" onClick={clearCart}>
-                      <Trash2 className="w-4 h-4 mr-2" /> Clear Cart
+                      <Trash2 className="w-4 h-4 mr-2" /> {t('clearCart') === 'clearCart' ? 'Clear Cart' : t('clearCart')}
                     </Button>
                   </div>
                 )}

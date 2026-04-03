@@ -62,20 +62,20 @@ const Home = () => {
         <div className="container mx-auto px-6 relative">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
             <h1 className="text-4xl lg:text-7xl font-black tracking-tight text-slate-900 mb-6 leading-[1.1]">
-              Smarter Livestock Care <br />
+              {t('heroTitle1') === 'heroTitle1' ? 'Smarter Livestock Care' : t('heroTitle1')} <br />
               <span className="text-emerald-600">
-                Starts Here
+                {t('heroTitle2') === 'heroTitle2' ? 'Starts Here' : t('heroTitle2')}
               </span>
             </h1>
             
             <p className="text-lg lg:text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl mx-auto font-medium">
-              Keep your cattle and poultry healthy with simple, smart monitoring. AgroArmor provides the precision tools you need for modern farming.
+              {t('heroSubtitle') === 'heroSubtitle' ? 'Keep your cattle and poultry healthy with simple, smart monitoring. AgroArmor provides the precision tools you need for modern farming.' : t('heroSubtitle')}
             </p>
             
             <div className="flex justify-center">
               <Link to="/hygiene-test">
                 <Button size="lg" className="h-16 px-12 text-xl font-black bg-emerald-600 hover:bg-emerald-500 text-white shadow-xl shadow-emerald-600/20 rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95 group">
-                  Get Started
+                  {t('getStarted') === 'getStarted' ? 'Get Started' : t('getStarted')}
                   <ArrowRight className="w-8 h-8 ml-3 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>

@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { AlertCircle, CheckCircle2, Bird, Milk } from "lucide-react";
+import poultryImage from "@/assets/poultry_farm_nice.png";
+import cattleImage from "@/assets/cattle_farm_nice.png";
 
 type FarmType = 'poultry' | 'cattle' | null;
 
@@ -150,9 +152,8 @@ const HygieneTest = () => {
                  onClick={() => setFarmType('poultry')}
               >
                  <CardContent className="p-0">
-                    <div className="h-48 bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center relative">
-                       <Bird className="w-24 h-24 text-white/20 absolute -bottom-4 -right-4 rotate-12" />
-                       <Bird className="w-20 h-20 text-white relative z-10 group-hover:scale-110 transition-transform duration-500" />
+                    <div className="h-48 relative overflow-hidden bg-emerald-50">
+                       <img src={poultryImage} alt="Poultry Farm" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     </div>
                     <div className="p-8 text-center">
                        <h3 className="text-2xl font-bold text-slate-900 mb-2">{t('poultryFarm')}</h3>
@@ -169,9 +170,8 @@ const HygieneTest = () => {
                  onClick={() => setFarmType('cattle')}
               >
                  <CardContent className="p-0">
-                    <div className="h-48 bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center relative">
-                       <Milk className="w-24 h-24 text-white/20 absolute -bottom-4 -right-4 rotate-12" />
-                       <Milk className="w-20 h-20 text-white relative z-10 group-hover:scale-110 transition-transform duration-500" />
+                    <div className="h-48 relative overflow-hidden bg-blue-50">
+                       <img src={cattleImage} alt="Cattle Farm" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     </div>
                     <div className="p-8 text-center">
                        <h3 className="text-2xl font-bold text-slate-900 mb-2">{t('cattleFarm')}</h3>

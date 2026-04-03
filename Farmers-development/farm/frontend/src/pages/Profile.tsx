@@ -6,7 +6,8 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { authApi } from '@/Backend/api/todoApi';
-import { User, Mail, UserCircle, Edit3, Camera } from 'lucide-react';
+import { User, Mail, UserCircle, Edit3, Camera, ShoppingBag } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 const Profile = () => {
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -16,12 +17,15 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [orders, setOrders] = useState<any[]>([]);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const { t } = useLanguage();
 
   useEffect(() => {
     fetchUserData();
+    const mockOrders = JSON.parse(localStorage.getItem('user_orders') || '[]');
+    setOrders(mockOrders);
   }, []);
 
   const fetchUserData = async () => {
@@ -135,17 +139,18 @@ const Profile = () => {
                  <h2 className="text-xl font-bold text-slate-900 mb-1">{name || 'User Name'}</h2>
                  <p className="text-slate-500 text-sm mb-4">{currentUser.email}</p>
                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold">
-                    User Account
+                    {t('userAccount') === 'userAccount' ? 'User Account' : t('userAccount')}
                  </div>
              </CardContent>
           </Card>
 
-          {/* Details Form */}
-          <Card className="col-span-1 md:col-span-2 rounded-3xl border-slate-100 shadow-sm">
-            <CardHeader className="flex flex-row items-center justify-between border-b border-slate-50 pb-6 px-8">
+          {/* Details Form and Orders Column */}
+          <div className="col-span-1 md:col-span-2 space-y-8">
+            <Card className="rounded-3xl border-slate-100 shadow-sm">
+              <CardHeader className="flex flex-row items-center justify-between border-b border-slate-50 pb-6 px-8">
               <div>
-                <CardTitle className="text-xl">Personal Information</CardTitle>
-                <CardDescription>Update your personal details here.</CardDescription>
+                <CardTitle className="text-xl">{t('personalInfoTitle') === 'personalInfoTitle' ? 'Personal Information' : t('personalInfoTitle')}</CardTitle>
+                <CardDescription>{t('personalInfoDesc') === 'personalInfoDesc' ? 'Update your personal details here.' : t('personalInfoDesc')}</CardDescription>
               </div>
               <Button 
                 variant="outline" 
@@ -154,14 +159,14 @@ const Profile = () => {
                 className="rounded-xl border-slate-200"
               >
                 <Edit3 className="w-4 h-4 mr-2" />
-                {isEditing ? 'Cancel' : 'Edit'}
+                {isEditing ? (t('cancel') === 'cancel' ? 'Cancel' : t('cancel')) : (t('edit') === 'edit' ? 'Edit' : t('edit'))}
               </Button>
             </CardHeader>
             <CardContent className="px-8 pt-6 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
-                    <User className="w-4 h-4 text-slate-400" /> Full Name
+                    <User className="w-4 h-4 text-slate-400" /> {t('fullName') === 'fullName' ? 'Full Name' : t('fullName')}
                   </label>
                   <Input 
                     value={name} 
@@ -172,7 +177,7 @@ const Profile = () => {
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-slate-400" /> Email Address
+                    <Mail className="w-4 h-4 text-slate-400" /> {t('emailAddress') === 'emailAddress' ? 'Email Address' : t('emailAddress')}
                   </label>
                   <Input 
                     value={email} 
@@ -191,12 +196,49 @@ const Profile = () => {
                      disabled={isSaving}
                      className="bg-primary hover:bg-primary/90 text-white rounded-xl shadow-elegant px-8"
                   >
-                    {isSaving ? 'Saving...' : 'Save Changes'}
+                    {isSaving ? (t('saving') === 'saving' ? 'Saving...' : t('saving')) : (t('saveChanges') === 'saveChanges' ? 'Save Changes' : t('saveChanges'))}
                   </Button>
                 </div>
               )}
             </CardContent>
           </Card>
+
+          {/* Orders Section */}
+          <Card className="rounded-3xl border-slate-100 shadow-sm">
+            <CardHeader className="flex flex-row items-center border-b border-slate-50 pb-6 px-8">
+              <div>
+                <CardTitle className="text-xl flex items-center gap-2">
+                  <ShoppingBag className="w-5 h-5 text-emerald-600" /> {t('myOrders') === 'myOrders' ? 'My Orders' : t('myOrders')}
+                </CardTitle>
+                <CardDescription>{t('myOrdersDesc') === 'myOrdersDesc' ? 'View your recent purchases' : t('myOrdersDesc')}</CardDescription>
+              </div>
+            </CardHeader>
+            <CardContent className="px-8 pt-6">
+              {orders.length === 0 ? (
+                <div className="text-center py-8 text-slate-500 border-2 border-dashed border-slate-100 rounded-xl">
+                  <p className="font-semibold text-slate-700 mb-1">{t('noOrdersTitle') === 'noOrdersTitle' ? 'No Active Orders' : t('noOrdersTitle')}</p>
+                  <p className="text-sm">{t('noOrdersDesc') === 'noOrdersDesc' ? 'You haven\'t placed any orders yet. Explore the marketplace.' : t('noOrdersDesc')}</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {orders.map((order, idx) => (
+                    <div key={idx} className="flex justify-between items-center bg-slate-50 p-4 rounded-xl">
+                      <div>
+                         <p className="font-bold text-slate-800">{order.name}</p>
+                         <p className="text-sm text-slate-500">Ordered on: {order.date}</p>
+                      </div>
+                      <div className="text-right">
+                         <p className="font-bold text-emerald-600">₹{order.price * (order.quantity || 1)}</p>
+                         <Badge variant="outline" className="mt-1 bg-white text-emerald-600 border-emerald-200">Processing</Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          </div>
         </div>
       </div>
     </div>
