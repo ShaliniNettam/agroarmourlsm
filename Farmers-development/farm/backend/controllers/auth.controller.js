@@ -1,5 +1,6 @@
 const User = require('../models/user.model');
 const { generateToken } = require('../middleware/auth');
+const hubspotService = require('../services/hubspotService');
 
 // Register new user
 const register = async (req, res) => {
@@ -27,6 +28,11 @@ const register = async (req, res) => {
     });
 
     await user.save();
+
+    // Sync new user to HubSpot CRM (fire-and-forget)
+    hubspotService.syncContact({ email, name, phone }).catch(err =>
+      console.error('HubSpot sync error (register):', err)
+    );
 
     // Generate token
     const token = generateToken(user._id);
@@ -77,6 +83,14 @@ const login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
+
+    // Track login event in HubSpot (fire-and-forget)
+    hubspotService.trackEvent(user.email, 'pe_login', {
+      phone: user.phone,
+      login_time: new Date().toISOString()
+    }).catch(err =>
+      console.error('HubSpot track error (login):', err)
+    );
 
     // Generate token
     const token = generateToken(user._id);

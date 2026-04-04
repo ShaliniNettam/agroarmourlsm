@@ -1,0 +1,53 @@
+﻿ M farm/frontend/src/components/Navbar.tsx
+ M farm/frontend/src/components/PaymentModal.tsx
+ M farm/frontend/src/i18n/bn.ts
+ M farm/frontend/src/i18n/en.ts
+ M farm/frontend/src/i18n/gu.ts
+ M farm/frontend/src/i18n/hi.ts
+ M farm/frontend/src/i18n/kn.ts
+ M farm/frontend/src/i18n/ml.ts
+ M farm/frontend/src/i18n/mr.ts
+ M farm/frontend/src/i18n/or.ts
+ M farm/frontend/src/i18n/pa.ts
+ M farm/frontend/src/i18n/ta.ts
+ M farm/frontend/src/i18n/te.ts
+ M farm/frontend/src/pages/Home.tsx
+ M farm/frontend/src/pages/HygieneTest.tsx
+ M farm/frontend/src/pages/Marketplace.tsx
+ M farm/frontend/src/pages/Profile.tsx
+?? farm/frontend/add-marketplace-keys.js
+?? farm/frontend/add-tractor-keys.js
+?? farm/frontend/clean_error.txt
+?? farm/frontend/fix-commas.js
+?? farm/frontend/lint_results.txt
+?? farm/frontend/patch_translations.js
+?? farm/frontend/src/assets/bvd_vaccine.png
+?? farm/frontend/src/assets/cattle_farm_nice.png
+?? farm/frontend/src/assets/chick-3d.png
+?? farm/frontend/src/assets/chick.png
+?? farm/frontend/src/assets/cow-3d.png
+?? farm/frontend/src/assets/crumbles.jpg
+?? farm/frontend/src/assets/fmd_vaccine.png
+?? farm/frontend/src/assets/layer_mash.jpg
+?? farm/frontend/src/assets/lsd_vaccine.png
+?? farm/frontend/src/assets/millet_combo.jpg
+?? farm/frontend/src/assets/newcastle_disease_zoetis.jpeg
+?? farm/frontend/src/assets/pellets.jpg
+?? farm/frontend/src/assets/pig-3d.png
+?? farm/frontend/src/assets/poultry_farm_nice.png
+?? farm/frontend/src/assets/ranikhet_vaccine.png
+?? farm/frontend/src/assets/sheep-3d.png
+?? farm/frontend/src/assets/vibex_wheat_seeds.png
+?? farm/frontend/src/components/AnimatedFarmBackground.tsx
+?? farm/frontend/translate_all_missing.js
+?? farm/frontend/translate_final_patch.js
+?? farm/frontend/translate_home_awareness.js
+?? farm/frontend/translate_hygiene.js
+?? farm/frontend/translate_profile_checkout.js
+?? farm/frontend/update-langs.js
+?? farm/frontend/update-promo.js
+?? git_status.txt
+?? git_status_clean.txt
+?? git_status_utf8.txt
+?? status.txt
+?? status_clean.txt
