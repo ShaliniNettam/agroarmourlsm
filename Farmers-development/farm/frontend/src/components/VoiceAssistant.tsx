@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Mic, X, MessageSquare, Sparkles, Volume2, AlertCircle, Navigation } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { getAnimalHealthResponse } from "@/utils/knowledgeBase";
+import { getAnimalHealthResponse } from "../utils/knowledgeBase";
 import { useNavigate } from 'react-router-dom';
 import { trackVoiceNavigation } from '@/lib/analytics';
 
