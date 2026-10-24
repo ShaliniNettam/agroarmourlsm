@@ -23,6 +23,10 @@ const doctorClinicRoutes = require('./routes/doctorClinic.routes');
 const appointmentRoutes = require('./routes/appointment.routes');
 const diseaseDetectionRoutes = require('./routes/diseaseDetection.routes');
 const communityRoutes = require('./routes/community.routes');
+const animalRoutes = require('./routes/animal.routes');
+const adminRoutes = require('./routes/admin.routes');
+const consultationRoutes = require('./routes/consultation.routes');
+const supportMessageRoutes = require('./routes/supportMessage.routes');
 
 // Import middleware
 const errorHandler = require('./middleware/errorHandler');
@@ -51,7 +55,8 @@ if (!process.env.JWT_SECRET) {
 // Middleware
 app.use(cors({
   origin: [
-    "https://agroarmourlsm-frontend.onrender.com",
+    "https://agroarmourlsm-frontend.onrender.com",  // V1 – do not remove
+    "https://agroarmor-v2.onrender.com",             // V2 A/B-testing frontend
     "http://16.176.157.113", 
     "http://localhost:8083", 
     "http://localhost:8084", 
@@ -97,6 +102,10 @@ app.use('/api/medical', doctorClinicRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/detections', diseaseDetectionRoutes);
 app.use('/api/community', communityRoutes);
+app.use('/api/animals', animalRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/consultations', consultationRoutes);
+app.use('/api/support', supportMessageRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {
@@ -112,7 +121,10 @@ app.get('/', (req, res) => {
       gps: '/api/gps',
       medical: '/api/medical',
       appointments: '/api/appointments',
-      detections: '/api/detections'
+      detections: '/api/detections',
+      animals: '/api/animals',
+      admin: '/api/admin',
+      consultations: '/api/consultations'
     }
   });
 });
