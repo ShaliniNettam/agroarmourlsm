@@ -1,0 +1,46 @@
+# render-v2.yaml
+# Render.com deployment config for AgroArmor V2 (A/B Testing + Voice Navigation)
+#
+# HOW TO USE:
+# 1. Go to https://dashboard.render.com
+# 2. Click "New +" → "Static Site"
+# 3. Connect your GitHub repo
+# 4. Set Branch to: feature/v2-ab-testing
+# 5. Fill in settings below (or paste this file as your render.yaml)
+#
+# Docs: https://render.com/docs/infrastructure-as-code
+
+services:
+  - type: web
+    name: agroarmor-v2
+    env: static
+    branch: feature/v2-ab-testing
+    buildCommand: cd farm/frontend && npm install && npm run build
+    staticPublishPath: farm/frontend/dist
+    pullRequestPreviewsEnabled: false
+
+    # Environment variables (add your real values in the Render dashboard)
+    envVars:
+      - key: VITE_API_URL
+        sync: false   # Set this manually in the Render dashboard
+      - key: VITE_MIXPANEL_TOKEN
+        sync: false
+      - key: VITE_AMPLITUDE_API_KEY
+        sync: false
+
+    # Serve index.html for all routes (SPA routing)
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+# V1 remains on: agroarmourlsm-frontend.onrender.com (main branch — DO NOT touch)
+# V2 will be on:  agroarmor-v2.onrender.com (feature/v2-ab-testing branch)

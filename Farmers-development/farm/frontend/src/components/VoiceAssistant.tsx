@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
-import { Mic, X, MessageSquare, Sparkles, Volume2, AlertCircle } from "lucide-react";
+import { Mic, X, MessageSquare, Sparkles, Volume2, AlertCircle, Navigation } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { getAnimalHealthResponse } from "@/utils/knowledgeBase";
+import { useNavigate } from 'react-router-dom';
+import { trackVoiceNavigation } from '@/lib/analytics';
 
 // --- Types for Web Speech API ---
 interface SpeechRecognitionEvent extends Event {
@@ -13,12 +17,37 @@ interface SpeechRecognitionErrorEvent extends Event {
   error: string;
 }
 
+// Voice navigation routes map
+const NAVIGATION_COMMANDS: Array<{ patterns: string[]; route: string; label: string }> = [
+  { patterns: ['go home', 'home', 'homepage', 'main page'], route: '/', label: 'Home' },
+  { patterns: ['open marketplace', 'marketplace', 'market', 'buy sell'], route: '/marketplace', label: 'Marketplace' },
+  { patterns: ['open awareness', 'awareness', 'disease info', 'health info'], route: '/awareness', label: 'Awareness' },
+  { patterns: ['hygiene test', 'hygiene', 'health test', 'check health'], route: '/hygiene-test', label: 'Hygiene Test' },
+  { patterns: ['find vet', 'find a vet', 'veterinary', 'find doctor', 'nearby vet'], route: '/find-vet', label: 'Find Vet' },
+  { patterns: ['open community', 'community', 'forum', 'farmer community'], route: '/community', label: 'Community' },
+  { patterns: ['go back', 'back', 'previous page'], route: '__back__', label: 'Back' },
+  { patterns: ['open livestock', 'livestock', 'my animals', 'animals dashboard'], route: '/livestock-dashboard', label: 'Livestock Dashboard' },
+];
+
+function matchNavigationCommand(text: string): { route: string; label: string } | null {
+  const lower = text.toLowerCase().trim();
+  for (const cmd of NAVIGATION_COMMANDS) {
+    if (cmd.patterns.some(p => lower.includes(p))) {
+      return { route: cmd.route, label: cmd.label };
+    }
+  }
+  return null;
+}
+
 const VoiceAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [aiResponse, setAiResponse] = useState("");
+  const [navMessage, setNavMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { t, language } = useLanguage();
+  const navigate = useNavigate();
   
   const recognitionRef = useRef<any>(null);
   const synthRef = useRef<SpeechSynthesis | null>(window.speechSynthesis);
@@ -55,7 +84,7 @@ const VoiceAssistant = () => {
       recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
         console.error("Speech Recognition Error:", event.error);
         if (event.error === 'not-allowed') {
-          setError("Microphone access denied. Please enable it in your browser settings.");
+          setError("Microphone access denied. Please click the site settings (padlock) icon in your browser URL bar to allow microphone access, then refresh the page.");
         } else {
           setError("Speech recognition failed. Please try again.");
         }
@@ -100,37 +129,40 @@ const VoiceAssistant = () => {
     }
   };
 
-  const generateSimpleResponse = (input: string) => {
-    const lowerInput = input.toLowerCase();
-    
-    if (lowerInput.includes("poultry") || lowerInput.includes("chicken") || lowerInput.includes("hen")) {
-      return "Based on your latest records, your poultry batch in Sector B is showing stable growth. Remember to check the Newcastle vaccination schedule for the younger hatchlings today.";
-    }
-    if (lowerInput.includes("crop") || lowerInput.includes("wheat") || lowerInput.includes("rice")) {
-      return "Soil moisture levels for your wheat fields are currently at 65%. I recommend skipping irrigation for the next 24 hours as light rain is expected.";
-    }
-    if (lowerInput.includes("weather") || lowerInput.includes("rain")) {
-      return "The forecast shows mostly clear skies with a 20% chance of rain this evening. Temperatures will hover around 28 degrees Celsius.";
-    }
-    if (lowerInput.includes("price") || lowerInput.includes("market")) {
-      return "Current market prices for organic tomatoes are up by 15% today. It might be a good time to list your harvest on the marketplace.";
-    }
-    if (lowerInput.includes("task") || lowerInput.includes("to do")) {
-      return "You have 3 pending tasks: check water levels, update livestock inventory, and review fertilizer supply.";
-    }
-    if (lowerInput.includes("hello") || lowerInput.includes("hi")) {
-      return "Hello! I am your AgroArmor AI assistant. How can I help you with your farm today?";
-    }
-    
-    return "I heard you say: '" + input + "'. I'm currently learning more about your farm data to provide specific advice. Is there anything particular about your livestock or crops you want to know?";
-  };
-
   const handleAiProcessing = (text: string) => {
-    // Artificial delay to feel more natural
+    // 1. Check navigation commands first
+    const navMatch = matchNavigationCommand(text);
+    if (navMatch) {
+      const msg = `Navigating to ${navMatch.label}...`;
+      setNavMessage(msg);
+      setAiResponse('');
+      speakResponse(msg);
+      trackVoiceNavigation(text, navMatch.route);
+      setTimeout(() => {
+        if (navMatch.route === '__back__') {
+          navigate(-1);
+        } else {
+          navigate(navMatch.route);
+        }
+        setNavMessage(null);
+      }, 900);
+      return;
+    }
+
+    // 2. Fall back to Q&A knowledge base
     setTimeout(() => {
-      const response = generateSimpleResponse(text);
-      setAiResponse(response);
-      speakResponse(response);
+      const response = getAnimalHealthResponse(text, t);
+      
+      if (response) {
+        setAiResponse(response);
+        speakResponse(response);
+      } else {
+        const defaultMsg = language === 'hi' 
+          ? "मुझे समझ नहीं आया। क्या आप मुर्गियों या पशुओं के रोगों के बारे में पूछ सकते हैं?"
+          : "I'm not sure I understand. You can ask about animal health, or say 'go home', 'open marketplace', 'find vet', etc.";
+        setAiResponse(defaultMsg);
+        speakResponse(defaultMsg);
+      }
     }, 800);
   };
 
@@ -175,12 +207,19 @@ const VoiceAssistant = () => {
               </div>
             )}
 
-            {!isListening && !transcript && !aiResponse && !error && (
-              <div className="text-center py-8">
+            {!isListening && !transcript && !aiResponse && !navMessage && !error && (
+              <div className="text-center py-6">
                 <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <MessageSquare className="w-8 h-8 text-primary/40" />
                 </div>
-                <p className="text-sm text-slate-500 px-4">Ask me anything about your farm health, marketplace prices, or tasks.</p>
+                <p className="text-sm text-slate-500 px-4 mb-3">Ask me about farm health, or navigate by voice:</p>
+                <div className="flex flex-wrap gap-1.5 justify-center px-2">
+                  {['go home', 'open marketplace', 'find vet', 'hygiene test', 'community'].map(cmd => (
+                    <span key={cmd} className="text-[10px] bg-primary/8 text-primary font-bold px-2 py-1 rounded-lg border border-primary/15">
+                      &ldquo;{cmd}&rdquo;
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
 
@@ -189,6 +228,13 @@ const VoiceAssistant = () => {
                 <div className="bg-primary p-4 rounded-2xl rounded-tr-none max-w-[85%] shadow-sm">
                   <p className="text-xs text-white font-medium leading-relaxed">{transcript}</p>
                 </div>
+              </div>
+            )}
+
+            {navMessage && (
+              <div className="flex items-center gap-3 p-3 bg-emerald-50 border border-emerald-200 rounded-xl animate-fade-in">
+                <Navigation className="w-4 h-4 text-emerald-600 shrink-0 animate-pulse" />
+                <p className="text-xs font-bold text-emerald-700">{navMessage}</p>
               </div>
             )}
 
