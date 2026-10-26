@@ -14,7 +14,12 @@ interface TodoResponse {
 
 // API for todo operations using HTTP requests to backend
 // API for todo operations using HTTP requests to backend
-const API_BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '/api'; // Use VITE_API_URL for production, proxy for development
+// In production builds VITE_API_URL MUST be set to the backend origin, e.g.:
+//   VITE_API_URL=https://agroarmour-backend.onrender.com/api
+// Without it, API calls fall back to the relative path /api, which on a
+// static-hosting service (like Render) returns an empty body – causing
+// "Unexpected end of JSON input" when the code tries to parse it as JSON.
+const API_BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '/api';
 // Get auth token from localStorage
 const getAuthToken = () => {
   return localStorage.getItem('authToken');
@@ -136,6 +141,27 @@ export const todoApi = {
   },
 };
 
+// ─── Shared helper ────────────────────────────────────────────────────────────
+// Safely parse a response body as JSON.  Throws a clear, actionable error
+// when the body is empty (which happens when VITE_API_URL is missing and API
+// calls land on the static host instead of the real backend).
+async function safeJson(response: Response, context: string): Promise<any> {
+  const text = await response.text();
+  if (!text || text.trim() === '') {
+    // Empty body – almost certainly hitting the wrong host.
+    const hint =
+      API_BASE === '/api'
+        ? ' (VITE_API_URL is not set – the request likely went to the static host instead of the backend)'
+        : '';
+    throw new Error(`${context}: server returned an empty response${hint}`);
+  }
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error(`${context}: unexpected response – ${text.slice(0, 120)}`);
+  }
+}
+
 // Authentication API
 export const authApi = {
   // Register new user
@@ -147,18 +173,26 @@ export const authApi = {
         body: JSON.stringify({ phone, password, name, email }),
       });
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `Registration failed: ${response.statusText}`);
+        // Safely read error body; fall back gracefully if empty / non-JSON
+        let errorMsg = `Registration failed (${response.status} ${response.statusText})`;
+        try {
+          const errText = await response.text();
+          if (errText.trim()) {
+            const errJson = JSON.parse(errText);
+            errorMsg = errJson.error || errJson.message || errorMsg;
+          }
+        } catch { /* keep default errorMsg */ }
+        throw new Error(errorMsg);
       }
-      const data = await response.json();
+      const data = await safeJson(response, 'Registration');
       if (data.token) {
         localStorage.setItem('authToken', data.token);
       }
       return data;
     } catch (error: any) {
       console.error('Registration error:', error);
-      if (error.message.includes('fetch')) {
-        throw new Error('Failed to fetch: Connection refused. Is the backend server running on port 5002?');
+      if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+        throw new Error('Cannot reach the AgroArmor server. Please check your internet connection.');
       }
       throw error;
     }
@@ -173,18 +207,25 @@ export const authApi = {
         body: JSON.stringify({ phone, password, email }),
       });
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `Login failed: ${response.statusText}`);
+        let errorMsg = `Login failed (${response.status} ${response.statusText})`;
+        try {
+          const errText = await response.text();
+          if (errText.trim()) {
+            const errJson = JSON.parse(errText);
+            errorMsg = errJson.error || errJson.message || errorMsg;
+          }
+        } catch { /* keep default errorMsg */ }
+        throw new Error(errorMsg);
       }
-      const data = await response.json();
+      const data = await safeJson(response, 'Login');
       if (data.token) {
         localStorage.setItem('authToken', data.token);
       }
       return data;
     } catch (error: any) {
       console.error('Login error:', error);
-      if (error.message.includes('fetch')) {
-        throw new Error('Failed to fetch: Connection refused. Is the backend server running on port 5002?');
+      if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+        throw new Error('Cannot reach the AgroArmor server. Please check your internet connection.');
       }
       throw error;
     }
