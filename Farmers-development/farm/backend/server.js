@@ -51,7 +51,8 @@ if (!process.env.JWT_SECRET) {
 // Middleware
 app.use(cors({
   origin: [
-    "https://agroarmourlsm-frontend.onrender.com",
+    "https://agroarmourlsm-frontend.onrender.com",  // V1 – do not remove
+    "https://agroarmor-v2.onrender.com",           // V2 A/B‑testing frontend
     "http://16.176.157.113", 
     "http://localhost:8083", 
     "http://localhost:8084", 
