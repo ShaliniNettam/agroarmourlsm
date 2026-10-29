@@ -15,8 +15,15 @@ import io
 app = Flask(__name__)
 CORS(app)
 
-# Load model
-model = tf.keras.models.load_model('chicken_disease_model.h5')
+# Load model with tf_keras compatibility for Keras 2 depthwise convolution layers
+model_path = os.path.join(os.path.dirname(__file__), 'chicken_disease_model.h5')
+try:
+    import tf_keras as keras
+    model = keras.models.load_model(model_path)
+except Exception:
+    import tensorflow as tf
+    model = tf.keras.models.load_model(model_path)
+
 classes = ['Coccidiosis', 'Healthy', 'New Castle Disease', 'Salmonella']
 
 @app.route('/predict', methods=['POST'])
@@ -51,11 +58,27 @@ def predict():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/', methods=['GET'])
+def root():
+    return jsonify({
+        'service': 'AgroArmour Poultry Disease Detection ML API',
+        'status': 'healthy',
+        'version': '1.0.0',
+        'model_loaded': True,
+        'classes': classes,
+        'endpoints': {
+            'health': '/health',
+            'predict': '/predict'
+        }
+    })
+
 @app.route('/health', methods=['GET'])
 def health():
     return jsonify({'status': 'ok', 'model_loaded': True})
 
 if __name__ == '__main__':
-    print("Starting Chicken Disease Prediction API...")
+    port = int(os.environ.get('PORT', 5000))
+    print(f"Starting Chicken Disease Prediction API on port {port}...")
     print("Model loaded successfully!")
-    app.run(host='0.0.0.0', port=5000, debug=False, use_reloader=False)
+    app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False)
+
